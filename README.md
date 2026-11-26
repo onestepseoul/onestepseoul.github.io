@@ -136,7 +136,7 @@ python3 _test/test_admin_pages.py      # 관리자 탭 전환
 - `test_admin_api.py` — **26개 항목 통과** (탭 구조로 바꿈 뒤에도 그대로)
 - `test_config_render.py` — **46개 통과 / 2개 실패**: 실패한 2개는 `config.json` 의 폼 주소가 실제 주소(`naver.me/…`)로 바뀌어 “자리표시자면 안내창만 뜬다”는 옛 기대값과 달라진 것입니다(코드 회귀 아님). 폼 주소를 비우면 다시 통과합니다.
 
-### 6-2. 실제 브라우저 (2026-11-26 13:40 배포본, 커밋 `39e7d1d`)
+### 6-2. 실제 브라우저 (2026-11-26 13:40 배포본, 커밋 `39e7d1d` + 라벨 수정 `20cc4ab`)
 
 - ✅ `https://onestepseoul.github.io/support.html?d=3&code=B07` **HTTP 200** · `config-support.json` 실제 로드(remote) · 마감 “11월 29일 (일) 23:59” · 고객번호 B07 표시 · **후기/1만원/사진 3장/15초/입금 문구 0건** · `noindex, nofollow`
 - ✅ 동의 체크 → 버튼 열림(“체크하신 내용으로 신청서가 열립니다”) → 클릭 시 `https://form.naver.com/response/LAP18Ly71Jb` (원스텝서울 무료 혜택 신청서 = 폼 B) 로 이동
