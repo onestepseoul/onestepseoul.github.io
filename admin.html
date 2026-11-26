@@ -132,6 +132,24 @@
   details.guide .gb li{margin:5px 0}
   details.guide .gb code{background:#eef1f6;border-radius:5px;padding:1px 5px;font-size:12.5px}
 
+  /* ---------- 섹션 구성 및 순서 ---------- */
+  .secrow{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;background:#fbfcfe}
+  .secrow.off{background:#f3f5f8}
+  .secrow.off .nm b{color:var(--ink3);text-decoration:line-through}
+  .secrow .hd{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .secrow .hd .idx{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:6px;background:#1a1f27;color:#fff;font-size:11px;font-weight:800;flex:0 0 auto}
+  .secrow .hd .nm{flex:1 1 150px;min-width:0;font-size:13.5px;line-height:1.35}
+  .secrow .hd .nm b{font-size:13.5px;font-weight:800}
+  .secrow .hd .nm em{display:block;font-style:normal;font-size:11.5px;font-weight:600;color:var(--ink3);margin-top:1px}
+  .secrow label.onoff{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--ink2);white-space:nowrap;cursor:pointer}
+  .secrow label.onoff input{width:18px;height:18px;margin:0;accent-color:var(--brand)}
+  .secrow .tools button[disabled]{opacity:.3;cursor:default}
+  .secrow .edit{margin-top:10px;border-top:1px dashed var(--line);padding-top:2px}
+  .secrow .edit .f{margin-top:9px}
+  .secrow .edit .f>span{font-size:11.5px}
+  .secrow .edit input,.secrow .edit textarea,.secrow .edit select{font-size:14px;padding:9px 10px;min-height:38px}
+  .customtag{display:inline-block;font-size:10.5px;font-weight:800;color:#1f5fd0;background:#eaf1ff;border-radius:5px;padding:2px 6px;margin-left:6px;vertical-align:1px}
+
   /* ---------- 하단 고정 저장바 ---------- */
   .actionbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(6px)}
   .actionbar .in{max-width:860px;margin:0 auto}
@@ -185,6 +203,24 @@
       </button>
     </div>
     <div class="tabinfo" id="tabInfo"></div>
+  </section>
+
+  <!-- ===================== 섹션 구성 및 순서 ===================== -->
+  <section class="card" id="cardSections">
+    <h2><span class="n">↕</span>섹션 구성 및 순서 관리</h2>
+    <p class="hint">
+      이 페이지에 나오는 섹션의 <b>순서</b>와 <b>보이기/숨기기</b>를 직접 바꿉니다.
+      고객에게 보이지 않게 하려면 <b>[보이기]</b> 체크를 끄면 됩니다.
+      맨 아래 <b>+ 새 섹션 추가</b> 로 안내 문구 섹션을 새로 만들 수 있습니다.
+    </p>
+    <div id="sectionList"></div>
+    <div class="btnrow">
+      <button class="btn ghost small" id="btnAddSection" type="button">+ 새 섹션 추가</button>
+    </div>
+    <p class="note" id="sectionNote">
+      숫자가 페이지에 나오는 순서입니다(위에서 아래로). 히어로(첫 화면)·푸터·하단 고정 버튼은 항상 고정입니다.
+      [신청서]는 맨 아래 신청 영역으로 남겨 두는 것을 권합니다.
+    </p>
   </section>
 
   <section class="card">
@@ -865,6 +901,7 @@
      폼 채우기
      ========================================================== */
   function renderAll() {
+    renderSections();
     renderSteps();
     renderCards();
     renderFields();
@@ -1057,6 +1094,215 @@
     ], {
       label: "질문", addLabel: "질문 추가",
       blank: function () { return { q: "", a: "" }; }
+    });
+  }
+
+  /* ==========================================================
+     섹션 구성 및 순서
+     ─ 페이지에 나오는 섹션의 순서·보이기 여부는 config 의
+       sectionOrder / sections / customSections 에 저장된다.
+     ========================================================== */
+  var SECTION_DEFS = {
+    index: [
+      { id: "how", label: "3단계 · 리워드", desc: "‘이렇게 하시면 됩니다’ 3단계 + 리워드 박스" },
+      { id: "benefits", label: "추가 혜택", desc: "쇼츠·세무기장 카드 + 혜택 신청 버튼" },
+      { id: "apply", label: "신청서", desc: "신청서 제출하기 (맨 아래 신청 영역)" },
+      { id: "proof", label: "실제 시공 사례", desc: "시공 사진 3칸 + 후기 글 (기본 숨김)" },
+      { id: "faq", label: "자주 묻는 질문", desc: "FAQ 접이식 목록" }
+    ],
+    support: [
+      { id: "benefits", label: "핵심 혜택 2개", desc: "쇼츠·숏폼 영상, 세무기장 카드" },
+      { id: "how", label: "진행 절차", desc: "3단계 + 무료 강조 박스" },
+      { id: "trust", label: "안심 안내", desc: "안심하고 신청하셔도 됩니다 (3개)" },
+      { id: "apply", label: "신청서", desc: "신청서 제출하기 (맨 아래 신청 영역)" },
+      { id: "faq", label: "자주 묻는 질문", desc: "FAQ 접이식 목록" }
+    ]
+  };
+
+  function sectionDefs() { return SECTION_DEFS[current] || SECTION_DEFS.index; }
+  function customArr() {
+    if (!draft) return [];
+    if (!Array.isArray(draft.customSections)) draft.customSections = [];
+    return draft.customSections;
+  }
+  function customItem(id) {
+    var arr = customArr();
+    for (var i = 0; i < arr.length; i++) if (arr[i] && arr[i].id === id) return arr[i];
+    return null;
+  }
+
+  /* 이 페이지에 필요한 값들을 빠진 것만 기본값으로 더한다 (기존 값은 건드리지 않음). */
+  function ensureSections() {
+    if (!draft) return;
+    if (!draft.sections || typeof draft.sections !== "object" || Array.isArray(draft.sections)) draft.sections = {};
+    var d = sectionDefs(), i;
+    for (i = 0; i < d.length; i++) {
+      var row = draft.sections[d[i].id];
+      if (!row || typeof row !== "object") draft.sections[d[i].id] = { label: d[i].label, visible: true };
+      else if (typeof row.visible !== "boolean") row.visible = true;
+    }
+    var arr = customArr();
+    var known = {}, customIds = {};
+    for (i = 0; i < d.length; i++) known[d[i].id] = true;
+    for (i = 0; i < arr.length; i++) if (arr[i] && arr[i].id) customIds[arr[i].id] = true;
+
+    var order = Array.isArray(draft.sectionOrder) ? draft.sectionOrder.slice() : [];
+    order = order.filter(function (id) { return typeof id === "string" && (known[id] || customIds[id]); });
+    for (i = 0; i < order.length; i++) if (order.indexOf(order[i]) !== i) { order.splice(i, 1); i--; }
+
+    /* 빠진 내장 섹션(새로 생긴 섹션 포함)은 신청서 바로 앞에 넣는다. */
+    for (i = 0; i < d.length; i++) {
+      if (order.indexOf(d[i].id) < 0) insertBeforeApply(order, d[i].id);
+    }
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i] && arr[i].id && order.indexOf(arr[i].id) < 0) insertBeforeApply(order, arr[i].id);
+    }
+    draft.sectionOrder = order;
+  }
+  function insertBeforeApply(order, id) {
+    var at = order.indexOf("apply");
+    if (at < 0) order.push(id); else order.splice(at, 0, id);
+  }
+
+  function getVisible(id) {
+    var c = customItem(id);
+    if (c && typeof c.visible === "boolean") return c.visible;
+    var row = draft.sections ? draft.sections[id] : null;
+    if (row && typeof row.visible === "boolean") return row.visible;
+    return true;
+  }
+  function setVisible(id, v) {
+    var c = customItem(id);
+    if (c) c.visible = !!v;
+    else {
+      if (!draft.sections[id] || typeof draft.sections[id] !== "object") draft.sections[id] = {};
+      draft.sections[id].visible = !!v;
+    }
+    dirty = true; markDirty(); renderSections();
+  }
+  function moveSection(idx, dir) {
+    var arr = draft.sectionOrder, to = idx + dir;
+    if (!arr || to < 0 || to >= arr.length || idx < 0) return;
+    var t = arr[idx]; arr[idx] = arr[to]; arr[to] = t;
+    dirty = true; markDirty(); renderSections();
+    scrollRow(idx);
+  }
+  function scrollRow(idx) {
+    var host = $("sectionList");
+    if (!host || !host.children || !host.children[idx]) return;
+    try { host.children[idx].scrollIntoView({ block: "nearest" }); } catch (e) {}
+  }
+  function addSection() {
+    if (!draft) return;
+    ensureSections();
+    var n = 1, id;
+    do { id = "custom-" + n; n++; } while (customItem(id));
+    draft.customSections.push({
+      id: id, kicker: "", title: "새 섹션 제목", sub: "", format: "text",
+      lines: ["이 부분을 고쳐 주세요. 한 줄에 하나씩 적으면 문단이 됩니다."],
+      ctaLabel: "", ctaHref: "#apply", visible: true
+    });
+    insertBeforeApply(draft.sectionOrder, id);
+    dirty = true; markDirty(); renderSections();
+    var idx = draft.sectionOrder.indexOf(id);
+    scrollRow(idx);
+  }
+  function delSection(id) {
+    if (!confirm("이 섹션을 지울까요? 지우면 페이지에서도 사라집니다.")) return;
+    var arr = customArr();
+    for (var i = 0; i < arr.length; i++) if (arr[i] && arr[i].id === id) { arr.splice(i, 1); break; }
+    var o = draft.sectionOrder || [];
+    for (var j = 0; j < o.length; j++) if (o[j] === id) { o.splice(j, 1); break; }
+    dirty = true; markDirty(); renderSections();
+  }
+
+  function secField(labelText, obj, key, opts) {
+    opts = opts || {};
+    var label = el("label", "f");
+    label.appendChild(el("span", null, labelText));
+    var input;
+    if (opts.type === "textarea") { input = el("textarea"); input.rows = opts.rows || 3; }
+    else if (opts.type === "select") {
+      input = el("select");
+      (opts.options || []).forEach(function (o) { var op = el("option", null, o.label); op.value = o.value; input.appendChild(op); });
+    } else if (opts.type === "lines") { input = el("textarea"); input.rows = 4; }
+    else { input = document.createElement("input"); input.type = "text"; }
+    var cur = obj[key];
+    if (opts.type === "lines") input.value = Array.isArray(cur) ? cur.join("\n") : (cur || "");
+    else input.value = (cur == null ? "" : cur);
+    var handler = function () {
+      var v = input.value;
+      if (opts.type === "lines") v = v.split("\n").filter(function (s) { return s.trim() !== ""; });
+      obj[key] = v;
+      dirty = true; markDirty();
+      if (opts.onInput) opts.onInput(v);
+    };
+    input.addEventListener("input", handler);
+    if (opts.type === "select") input.addEventListener("change", handler);
+    label.appendChild(input);
+    if (opts.help) label.appendChild(el("span", "help", opts.help));
+    return label;
+  }
+
+  function renderSections() {
+    var host = $("sectionList");
+    if (!host || !draft) return;
+    ensureSections();
+    host.innerHTML = "";
+    var order = draft.sectionOrder || [], d = sectionDefs(), defMap = {}, i;
+    for (i = 0; i < d.length; i++) defMap[d[i].id] = d[i];
+
+    order.forEach(function (id, idx) {
+      var item = customItem(id);
+      var def = defMap[id] || { label: id, desc: "" };
+      var isCustom = !!item;
+      var vis = getVisible(id);
+      var row = el("div", "secrow" + (vis ? "" : " off"));
+
+      var hd = el("div", "hd");
+      hd.appendChild(el("span", "idx", String(idx + 1)));
+      var nm = el("span", "nm");
+      var titleEl = el("b", null, isCustom ? (item.title || "(제목 없음)") : def.label);
+      nm.appendChild(titleEl);
+      if (isCustom) nm.appendChild(el("span", "customtag", "직접 추가"));
+      nm.appendChild(el("em", null, isCustom ? "내용을 직접 고칠 수 있습니다" : (def.desc || "")));
+      hd.appendChild(nm);
+
+      var onoff = el("label", "onoff");
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = vis;
+      cb.addEventListener("change", function () { setVisible(id, cb.checked); });
+      onoff.appendChild(cb);
+      onoff.appendChild(el("span", null, "보이기"));
+      hd.appendChild(onoff);
+
+      var tools = el("div", "tools");
+      var up = toolBtn("▲", function () { moveSection(idx, -1); });
+      if (idx === 0) up.disabled = true;
+      var down = toolBtn("▼", function () { moveSection(idx, 1); });
+      if (idx === order.length - 1) down.disabled = true;
+      tools.appendChild(up); tools.appendChild(down);
+      if (isCustom) tools.appendChild(toolBtn("삭제", function () { delSection(id); }, "danger"));
+      hd.appendChild(tools);
+      row.appendChild(hd);
+
+      if (isCustom) {
+        var box = el("div", "edit");
+        box.appendChild(secField("제목", item, "title", {
+          onInput: function (v) { titleEl.textContent = v || "(제목 없음)"; }
+        }));
+        box.appendChild(secField("소제목 (선택)", item, "sub"));
+        box.appendChild(secField("표시 형식", item, "format", {
+          type: "select",
+          options: [{ value: "text", label: "문단 (한 줄에 하나씩)" }, { value: "list", label: "목록 (• 불릿)" }]
+        }));
+        box.appendChild(secField("내용 (한 줄에 하나씩)", item, "lines", {
+          type: "lines", rows: 4, help: "**굵게** 로 감싸면 굵게 표시됩니다."
+        }));
+        box.appendChild(secField("버튼 글자 (선택)", item, "ctaLabel", { help: "비우면 버튼이 나오지 않습니다." }));
+        box.appendChild(secField("버튼 주소 (선택)", item, "ctaHref", { help: "예) #apply — 이 페이지의 신청서로 이동" }));
+        row.appendChild(box);
+      }
+      host.appendChild(row);
     });
   }
 
@@ -1369,6 +1615,7 @@
     $("btnReload").addEventListener("click", reloadFromSite);
     $("btnJsonLoad").addEventListener("click", function () { renderJson(); setJsonStatus("", "현재 편집 중인 값을 다시 채웠습니다."); });
     $("btnJsonApply").addEventListener("click", applyJson);
+    if ($("btnAddSection")) $("btnAddSection").addEventListener("click", addSection);
   }
 
   window.addEventListener("beforeunload", function (e) {
@@ -1391,7 +1638,14 @@
     uploadPhoto: uploadPhoto,
     save: save,
     b64utf8: b64utf8,
-    unb64utf8: unb64utf8
+    unb64utf8: unb64utf8,
+    renderSections: renderSections,
+    ensureSections: ensureSections,
+    addSection: addSection,
+    delSection: delSection,
+    moveSection: moveSection,
+    setVisible: setVisible,
+    sectionDefs: sectionDefs
   };
 
   if (!window.__adminTest) init();

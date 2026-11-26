@@ -5,6 +5,36 @@
     "title": "원스텝서울 간판 후기 이벤트 · 후기 남기고 10,000원",
     "description": "원스텝서울에서 간판을 시공하신 사장님께만 드리는 후기 이벤트. 사진·영상 후기 1건에 10,000원 당일 입금."
   },
+  "sectionOrder": [
+    "how",
+    "benefits",
+    "apply",
+    "proof",
+    "faq"
+  ],
+  "sections": {
+    "how": {
+      "label": "3단계 · 리워드 (이렇게 하시면 됩니다)",
+      "visible": true
+    },
+    "benefits": {
+      "label": "추가 혜택 (쇼츠·세무기장 카드)",
+      "visible": true
+    },
+    "apply": {
+      "label": "신청서 (신청서 제출하기)",
+      "visible": true
+    },
+    "proof": {
+      "label": "실제 시공 사례 (사진 3칸 · 후기)",
+      "visible": false
+    },
+    "faq": {
+      "label": "자주 묻는 질문 (FAQ)",
+      "visible": true
+    }
+  },
+  "customSections": [],
   "brand": {
     "topbar": "원스텝서울(주)🎁 간판 후기 및 소상공인 매출 증대 이벤트",
     "timerLabel": "마감까지",

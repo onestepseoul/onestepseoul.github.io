@@ -323,6 +323,15 @@
     .stickycta{display:none}
     footer{padding-bottom:40px}
   }
+  /* ---------- 커스텀 섹션 (관리자 [섹션 구성 및 순서 관리]에서 추가) ---------- */
+  .csec .kicker{margin:0 0 6px;font-size:12.5px;font-weight:800;letter-spacing:.06em;color:var(--brand-dark)}
+  .csec .csec-sub{margin-top:8px;font-size:14px}
+  .csec-body{margin-top:14px}
+  .csec-p{margin:8px 0;font-size:14.5px;color:var(--ink2);line-height:1.7}
+  .csec-list{margin:8px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink2);line-height:1.7}
+  .csec-list li{margin:6px 0}
+  .csec .btn{display:inline-flex;margin-top:16px}
+
   @media print{
     .topbar,.stickycta,.hero .btn,.benefits .btn-primary{display:none !important}
     body{background:#fff}
@@ -381,7 +390,7 @@
 </header>
 
 <!-- ================= 핵심 혜택 2개 ================= -->
-<section class="benefits sec" id="benefits">
+<section class="benefits sec" id="benefits" data-section-id="benefits">
   <div class="wrap">
     <p class="kicker" id="benefitKicker">이번 혜택 · 전액 무료</p>
     <h2 id="benefitTitle">두 가지를 무료로 도와드립니다</h2>
@@ -416,7 +425,7 @@
 </section>
 
 <!-- ================= 신청 절차 ================= -->
-<section class="sec" id="how">
+<section class="sec" id="how" data-section-id="how">
   <div class="wrap">
     <h2 id="howTitle">신청하고 받기까지</h2>
     <p class="muted" id="howSub" style="margin-top:8px;font-size:14px">복잡한 절차 없이 세 단계입니다.</p>
@@ -454,7 +463,7 @@
 </section>
 
 <!-- ================= 안심 안내 ================= -->
-<section class="sec-tight" id="trust">
+<section class="sec-tight" id="trust" data-section-id="trust">
   <div class="wrap">
     <h2 id="trustTitle">안심하고 신청하셔도 됩니다</h2>
     <p class="muted" id="trustSub" style="margin-top:8px;font-size:14px">원스텝서울(주)가 직접 진행하는 소상공인 지원 프로그램입니다.</p>
@@ -480,7 +489,7 @@
 </section>
 
 <!-- ================= 신청서 ================= -->
-<section class="sec" id="apply">
+<section class="sec" id="apply" data-section-id="apply">
   <div class="wrap">
     <div class="formcard">
       <h2 id="applyTitle">무료 혜택 신청서</h2>
@@ -591,7 +600,7 @@
 </section>
 
 <!-- ================= FAQ ================= -->
-<section class="sec" id="faq">
+<section class="sec" id="faq" data-section-id="faq">
   <div class="wrap">
     <h2 id="faqTitle">자주 묻는 질문</h2>
     <div id="faqList">
@@ -906,6 +915,103 @@
     /* 하단 고정 CTA */
     setText("stickyAmount", (rw.amount || "") + (rw.unit || ""));
     setText("stickyNote", br.stickyNote);
+
+    /* 섹션 순서·숨김·커스텀 섹션 */
+    applySections(cfg);
+  }
+
+  /* ---------- 3-1) 섹션 순서 · 표시/숨김 · 커스텀 섹션 ----------
+     config-support.json 의 sectionOrder / sections / customSections 를 읽어
+     [data-section-id] 섹션을 다시 늘어놓고, visible:false 인 섹션은 숨깁니다.
+     이 값들이 없는 예전 JSON 이면 지금 HTML 순서 그대로 둡니다(하위 호환). */
+  function sectionMap(cfg) { return (cfg && typeof cfg.sections === "object" && cfg.sections) ? cfg.sections : {}; }
+  function customSections(cfg) { return (cfg && Array.isArray(cfg.customSections)) ? cfg.customSections : []; }
+  function customById(cfg, id) {
+    var cs = customSections(cfg);
+    for (var i = 0; i < cs.length; i++) if (cs[i] && String(cs[i].id) === String(id)) return cs[i];
+    return null;
+  }
+  function sectionVisible(cfg, id, node) {
+    var row = sectionMap(cfg)[id];
+    if (row && typeof row === "object" && typeof row.visible === "boolean") return row.visible;
+    if (typeof row === "boolean") return row;
+    var c = customById(cfg, id);
+    if (c && typeof c.visible === "boolean") return c.visible;
+    if (node && node.getAttribute && node.getAttribute("data-default-visible") === "false") return false;
+    return true;
+  }
+  function sectionLines(item) {
+    var v = item ? item.lines : null;
+    if (Array.isArray(v)) return v.filter(function (l) { return String(l == null ? "" : l).trim() !== ""; });
+    if (typeof v === "string") return v.split("\n").filter(function (l) { return l.trim() !== ""; });
+    return [];
+  }
+  function customSectionHTML(item) {
+    var out = '<div class="wrap csec">';
+    if (item.kicker) out += '<p class="kicker">' + rich(item.kicker) + "</p>";
+    if (item.title) out += "<h2>" + esc(item.title) + "</h2>";
+    if (item.sub) out += '<p class="muted csec-sub">' + rich(item.sub) + "</p>";
+    var lines = sectionLines(item), body = "";
+    if (item.format === "list") {
+      body = '<ul class="csec-list">' + lines.map(function (l) { return "<li>" + rich(l) + "</li>"; }).join("") + "</ul>";
+    } else {
+      body = lines.map(function (l) { return '<p class="csec-p">' + rich(l) + "</p>"; }).join("");
+    }
+    if (body) out += '<div class="csec-body">' + body + "</div>";
+    if (item.ctaLabel) out += '<a class="btn btn-primary" href="' + esc(item.ctaHref || "#apply") + '">' + esc(item.ctaLabel) + "</a>";
+    return out + "</div>";
+  }
+  function applySections(cfg) {
+    var nodes = document.querySelectorAll("[data-section-id]");
+    if (!nodes || !nodes.length) return;
+    var parent = nodes[0].parentNode;
+    var anchor = nodes[nodes.length - 1].nextSibling;
+    var byId = {}, domOrder = [], i, id;
+    for (i = 0; i < nodes.length; i++) {
+      id = nodes[i].getAttribute("data-section-id");
+      byId[id] = nodes[i];
+      domOrder.push(id);
+    }
+
+    var cs = customSections(cfg);
+    for (i = 0; i < cs.length; i++) {
+      var item = cs[i];
+      if (!item || !item.id) continue;
+      var box = byId[item.id];
+      if (!box) {
+        box = document.createElement("section");
+        box.className = "sec";
+        box.id = item.id;
+        box.setAttribute("data-section-id", item.id);
+        parent.insertBefore(box, anchor);
+        byId[item.id] = box;
+      }
+      box.innerHTML = customSectionHTML(item);
+    }
+
+    var order = [];
+    function push(v) {
+      if (v == null || v === "") return;
+      var k = String(v);
+      if (order.indexOf(k) < 0) order.push(k);
+    }
+    var want = (cfg && Array.isArray(cfg.sectionOrder)) ? cfg.sectionOrder : [];
+    for (i = 0; i < want.length; i++) push(want[i]);
+    for (i = 0; i < cs.length; i++) if (cs[i]) push(cs[i].id);
+    for (i = 0; i < domOrder.length; i++) push(domOrder[i]);
+
+    for (i = 0; i < order.length; i++) {
+      var node = byId[order[i]];
+      if (!node) continue;
+      if (sectionVisible(cfg, order[i], node)) {
+        node.style.display = "";
+        if (node.removeAttribute) node.removeAttribute("hidden");
+      } else {
+        node.style.display = "none";
+        node.setAttribute("hidden", "hidden");
+      }
+      parent.insertBefore(node, anchor);
+    }
   }
 
   /* ---------- 4) 카운트다운 (1초마다) ---------- */
@@ -1074,6 +1180,7 @@
     window.__supportConfigSource = src;
     window.__landingConfigSource = src;   // 검사 스크립트 호환
     if (src !== "builtin") render(state.cfg);
+    else applySections(state.cfg);
 
     var s = state.cfg.settings || {};
     state.deadline = computeDeadline(new Date(), { days: qDays, until: qUntil, campaignEnd: s.campaignEnd });
