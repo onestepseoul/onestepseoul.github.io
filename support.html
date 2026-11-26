@@ -60,8 +60,8 @@
     overflow-wrap:anywhere;
   }
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
-  .sec{padding:44px 0}
-  .sec-tight{padding:30px 0}
+  .sec{padding:44px 0;scroll-margin-top:64px}
+  .sec-tight{padding:30px 0;scroll-margin-top:64px}
   h1,h2,h3{margin:0;line-height:1.28;letter-spacing:-.02em}
   h1{font-size:31px;font-weight:800}
   h2{font-size:22px;font-weight:800}
@@ -120,7 +120,7 @@
   .cd-grid{display:flex;align-items:flex-end;gap:8px;margin-top:10px}
   .cd-cell{flex:1;text-align:center;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 4px 8px}
   .cd-cell b{display:block;font-size:28px;line-height:1;font-weight:900;letter-spacing:-.03em}
-  .cd-cell span{display:block;margin-top:6px;font-size:11px;color:#aeb6c2;font-weight:700}
+  .cd-cell span{display:block;margin-top:6px;font-size:12px;color:#aeb6c2;font-weight:700}
   .cd-colon{align-self:center;padding-bottom:18px;color:#6f7885;font-weight:900}
   .cd-foot{margin-top:10px;font-size:12.5px;color:#c7cdd6}
   .cd-foot b{color:#fff}
@@ -182,7 +182,7 @@
   .fields{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--line)}
   .fields li{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
   .fields .k{flex:0 0 96px;font-size:13.5px;font-weight:800;color:var(--ink)}
-  .fields .k .req{color:var(--brand);font-size:11px;font-weight:800;margin-left:3px;vertical-align:2px}
+  .fields .k .req{color:var(--brand);font-size:12px;font-weight:800;margin-left:3px;vertical-align:2px}
   .fields .v{flex:1;font-size:13.5px;color:var(--ink2)}
   .fields .v em{font-style:normal;color:var(--ink3);border-bottom:1px dashed #ccc5ba;padding:0 2px}
 
@@ -191,7 +191,7 @@
   .consent .line{
     font-size:16.5px;line-height:1.5;font-weight:800;color:#2a1a12;letter-spacing:-.02em;
   }
-  .consent .line .must{display:inline-block;background:var(--brand);color:#fff;font-size:11.5px;font-weight:800;border-radius:6px;padding:3px 7px;vertical-align:3px;margin-left:6px;white-space:nowrap}
+  .consent .line .must{display:inline-block;background:var(--brand);color:#fff;font-size:12px;font-weight:800;border-radius:6px;padding:3px 7px;vertical-align:3px;margin-left:6px;white-space:nowrap}
   .checkrow{display:flex;align-items:flex-start;gap:11px;margin-top:14px;background:#fff;border:1.5px solid var(--brand);border-radius:12px;padding:13px 13px}
   .checkrow input[type=checkbox]{flex:0 0 24px;width:24px;height:24px;margin:0;accent-color:var(--brand);cursor:pointer}
   .checkrow label{font-size:14px;font-weight:800;color:var(--ink);cursor:pointer}
@@ -225,8 +225,8 @@
   .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .fld{display:block;margin-top:14px}
   .fld .fl{display:flex;align-items:center;gap:6px;font-size:13.5px;font-weight:800;color:var(--ink)}
-  .fld .fl .req{color:#b8340f;font-size:11px;font-weight:800;background:#ffefe7;border-radius:5px;padding:1px 6px}
-  .fld .fl .opt{color:var(--ink3);font-size:11px;font-weight:800;background:#f2f0ec;border-radius:5px;padding:1px 6px}
+  .fld .fl .req{color:#b8340f;font-size:12px;font-weight:800;background:#ffefe7;border-radius:5px;padding:1px 6px}
+  .fld .fl .opt{color:var(--ink3);font-size:12px;font-weight:800;background:#f2f0ec;border-radius:5px;padding:1px 6px}
   .fld input,.fld select{
     display:block;width:100%;margin-top:7px;padding:13px 14px;font-size:16px;font-family:inherit;color:var(--ink);
     background:#fff;border:1.5px solid #d9d3c9;border-radius:12px;outline:none;
@@ -241,8 +241,8 @@
   .checkrow + .checkrow{margin-top:10px}
   .checkrow.soft{border-color:#ddd7cd}
   .checkrow .ck{display:block;font-size:14px;font-weight:800;color:var(--ink)}
-  .checkrow .ck .must{display:inline-block;background:var(--brand);color:#fff;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;margin-right:4px;vertical-align:1px}
-  .checkrow .ck .may{display:inline-block;background:#e9e5de;color:#5a5f66;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;margin-right:4px;vertical-align:1px}
+  .checkrow .ck .must{display:inline-block;background:var(--brand);color:#fff;font-size:12px;font-weight:800;border-radius:6px;padding:2px 7px;margin-right:4px;vertical-align:1px}
+  .checkrow .ck .may{display:inline-block;background:#e9e5de;color:#5a5f66;font-size:12px;font-weight:800;border-radius:6px;padding:2px 7px;margin-right:4px;vertical-align:1px}
   .consent .cknote{margin-top:10px;font-size:12px;color:var(--ink3)}
   .done{display:none;margin-top:18px;border:1.5px solid #bde5d3;background:#f1fbf6;border-radius:16px;padding:24px 18px;text-align:center}
   .done.on{display:block}
@@ -262,7 +262,7 @@
     background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.03));
     border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:18px;margin-top:12px;
   }
-  .bcard .tagline{display:inline-block;font-size:11.5px;font-weight:800;color:#151a22;background:var(--gold);border-radius:999px;padding:4px 10px}
+  .bcard .tagline{display:inline-block;font-size:12px;font-weight:800;color:#151a22;background:var(--gold);border-radius:999px;padding:4px 10px}
   .bcard h3{margin-top:11px;color:#fff;font-size:18px}
   .bcard .bdesc{margin-top:7px;font-size:13.5px;color:#b7bdc7}
   .bcard ul{margin:9px 0 0;padding-left:17px;font-size:13.8px;color:#c9cfd8;line-height:1.66}
@@ -274,7 +274,7 @@
 
   /* ---------- FAQ ---------- */
   details.faq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 15px;margin-top:10px;box-shadow:var(--shadow)}
-  details.faq>summary{cursor:pointer;list-style:none;padding:15px 0;font-size:14.5px;font-weight:800;display:flex;justify-content:space-between;gap:12px}
+  details.faq>summary{cursor:pointer;list-style:none;padding:15px 0;font-size:14.5px;font-weight:800;display:flex;align-items:flex-start;justify-content:flex-start;gap:12px;line-height:1.45}
   details.faq>summary::-webkit-details-marker{display:none}
   details.faq>summary .q{color:var(--brand);font-weight:900;margin-right:7px}
   details.faq .a{padding:0 0 16px;font-size:13.8px;color:var(--ink2);line-height:1.7}
@@ -300,7 +300,7 @@
   .stickycta .row{display:flex;align-items:center;gap:12px;max-width:var(--maxw);margin:0 auto}
   .stickycta .price{flex:0 0 auto;line-height:1.15}
   .stickycta .price b{display:block;font-size:16px;font-weight:900;color:var(--brand-dark)}
-  .stickycta .price span{font-size:11.5px;color:var(--ink3);font-weight:700}
+  .stickycta .price span{font-size:12px;color:var(--ink3);font-weight:700}
   .stickycta .btn{flex:1;padding:14px 12px;font-size:15.5px;border-radius:14px}
 
   /* ---------- 반응형 ---------- */
@@ -766,8 +766,13 @@
     setText("heroCtaNote", h.ctaNote);
     var seats = $("seats");
     if (seats) {
-      if (h.seats) { seats.textContent = h.seats; seats.style.display = ""; }
-      else { seats.textContent = ""; seats.style.display = "none"; }
+      if (h.seats) {
+        var seatsText = String(h.seats).trim();
+        // 숫자만 저장된 경우(예: "17") 라벨 없이 숫자만 뜨지 않도록 안내 문구를 붙인다.
+        if (/^[0-9]+$/.test(seatsText)) seatsText = "잔여 " + seatsText + "자리";
+        seats.textContent = seatsText;
+        seats.style.display = "";
+      } else { seats.textContent = ""; seats.style.display = "none"; }
     }
 
     /* 핵심 혜택 2개 */
