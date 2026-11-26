@@ -1131,8 +1131,14 @@
     state.sending = true;
     if (btn) { btn.disabled = true; btn.textContent = ap.submittingLabel || "전송 중…"; }
 
-    function done() { state.sending = false; if (btn) btn.textContent = label; showDone(); }
+    var settled = false, timer = null, ctrl = null;
+    function stopTimer() { if (timer) { clearTimeout(timer); timer = null; } }
+    function done() {
+      if (settled) return; settled = true; stopTimer();
+      state.sending = false; if (btn) btn.textContent = label; showDone();
+    }
     function fail() {
+      if (settled) return; settled = true; stopTimer();
       state.sending = false;
       if (btn) { btn.disabled = false; btn.textContent = label; }
       try {
@@ -1142,13 +1148,59 @@
       refreshSubmit();
     }
 
+    /* 구글 시트(Apps Script 웹앱) 전송 — 완료 화면은 접수가 확인된 뒤에만 띄웁니다.
+       1) 먼저 응답까지 읽는 POST. 보통 2~4초에 {"ok":true,...} 가 오고, 이때만 완료로 봅니다.
+       2) 인앱 브라우저 등에서 CORS 가 막히면 숨은 iframe 으로 같은 폼을 그대로 전송하고,
+          그 응답이 끝나면 완료로 봅니다. (예전 no-cors 방식은 성공·실패를 알 수 없어
+          버튼이 '전송 중…' 에서 오래 멈춘 것처럼 보였습니다.) */
+    function postByFrame() {
+      if (settled) return;
+      if (ctrl) { try { ctrl.abort(); } catch (e) {} }   /* 늦게 도착한 응답은 버려 중복 접수를 막습니다 */
+      stopTimer();
+      timer = setTimeout(fail, 25000);
+
+      var name = "intakeSink" + Math.floor(Math.random() * 1e6);
+      var frame = document.createElement("iframe");
+      frame.name = name;
+      frame.setAttribute("title", "신청서 전송");
+      frame.style.display = "none";
+      frame.onload = function () {
+        var same = true;
+        try { same = !!frame.contentWindow.location.href; } catch (e) { same = false; }
+        if (same) return;   /* about:blank — 아직 전송 전 */
+        done();
+      };
+      document.body.appendChild(frame);
+
+      var f = document.createElement("form");
+      f.method = "POST";
+      f.action = url;
+      f.target = name;
+      f.style.display = "none";
+      params.forEach(function (v, k) {
+        var i = document.createElement("input");
+        i.type = "hidden"; i.name = k; i.value = v;
+        f.appendChild(i);
+      });
+      document.body.appendChild(f);
+      try { f.submit(); } catch (e) { fail(); }
+    }
+
+    timer = setTimeout(postByFrame, 20000);
     try {
-      // Apps Script 웹앱: CORS 응답을 읽지 않으므로 no-cors + form-urlencoded 로 보냅니다.
-      fetch(url, { method: "POST", mode: "no-cors", body: params })
-        .then(function () { done(); })
-        .catch(function () { fail(); });
-    } catch (e) { fail(); }
+      ctrl = (typeof AbortController === "function") ? new AbortController() : null;
+      fetch(url, { method: "POST", body: params, signal: ctrl ? ctrl.signal : undefined })
+        .then(function (r) {
+          return r.text().then(function (body) {
+            var j = null;
+            try { j = JSON.parse(body); } catch (e) {}
+            if (j && j.ok) done(); else fail();
+          });
+        })
+        .catch(function () { postByFrame(); });
+    } catch (e) { postByFrame(); }
   }
+
 
   /* ---------- 7) 이벤트 연결 (한 번만) ---------- */
   function bind() {
