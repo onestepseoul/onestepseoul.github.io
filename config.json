@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-26T12:50:00+09:00",
+  "updatedAt": "2026-11-26T13:30:00+09:00",
   "meta": {
     "title": "원스텝서울 간판 후기 이벤트 · 후기 남기고 10,000원",
     "description": "원스텝서울에서 간판을 시공하신 사장님께만 드리는 후기 이벤트. 사진·영상 후기 1건에 10,000원 당일 입금."
@@ -244,8 +244,8 @@
     "privacySummary": "수집 항목: 성함, 연락처, 가게명, 후기 링크·캡처, 입금 계좌(은행·예금주·계좌번호) · 이용 목적: 후기 이벤트 확인 및 리워드 지급, 숏폼 영상·세무기장 혜택 안내 · 보유 기간: 리워드 지급 완료 후 3개월 · 제3자 제공: 없음 · 위탁: 네이버 폼(접수), 이용 은행(이체) · 동의 철회: 당근 ‘원스텝서울’ 채팅으로 언제든 요청 가능 · 문의: {{privacyOfficer}}"
   },
   "settings": {
-    "naverFormUrl": "https://form.naver.com/answer/NAVER_FORM_ID_PLACEHOLDER",
-    "benefitFormUrl": "https://form.naver.com/answer/NAVER_BENEFIT_FORM_ID_PLACEHOLDER",
+    "naverFormUrl": "https://naver.me/GbykMLw6",
+    "benefitFormUrl": "https://naver.me/GSQfqO72",
     "defaultDays": 5,
     "campaignEnd": "",
     "passCodeToForm": true
