@@ -9,14 +9,19 @@
 <!--
   ============================================================
   원스텝서울 간판 후기 이벤트 랜딩 (단일 파일, 외부 CDN 없음)
-  ─
-  ▶ 고칠 곳은 아래 CONFIG 한 곳뿐입니다. (파일 안에서 "CONFIG" 로 검색)
+
+  ▶ 문구·혜택·링크·사진은 이제 admin.html(관리자 페이지)에서 고칩니다.
+     값은 같은 폴더의 config.json 에 저장되고, 이 페이지는 열릴 때마다
+     config.json 을 새로 받아 화면에 반영합니다. (실패하면 아래 HTML에 들어 있는
+     기본 문구 그대로 보여줍니다 — 즉 이 파일만 있어도 예전과 똑같이 동작합니다.)
+
   ▶ 개인별 링크: index.html?d=3&code=A12
        ?d=3    → 남은 일수 3일 (없으면 DEFAULT_DAYS 사용)
        ?until=2026-12-02 → 특정 날짜·시각까지 (d보다 우선)
        ?code=A12 → 고객번호 표시 + 네이버 폼 링크 뒤에 &code=A12 로 전달
+     ※ 관리자 페이지의 [미리보기]는 ?draft=1 로 열려, 저장 전 내용을 이 브라우저에서만 보여줍니다.
+
   ▶ 실제 신청서는 네이버 폼에서 받습니다. 이 페이지는 설득 + 동의 화면입니다.
-     (페이지에서 입력받고 폼으로 넘기면 입력값이 사라지므로, 항목은 '적으실 내용'으로 안내합니다)
   ============================================================
 -->
 <style>
@@ -163,7 +168,6 @@
     font-size:11.5px;line-height:1.45;color:#9a9388;padding:8px;
   }
   .case b{display:block;color:#7e776c;font-size:12px}
-  /* 실제 사진 넣을 때: <div class="case"><img src="case1.jpg" alt="시공 사례"></div> 후 CSS .case img{width:100%;height:100%;object-fit:cover;border-radius:12px} */
   .case img{width:100%;height:100%;object-fit:cover;border-radius:12px}
 
   .quote{
@@ -173,6 +177,7 @@
   .quote .stars{color:#f5a623;font-size:14px;letter-spacing:2px}
   .quote p{font-size:14.5px;color:var(--ink);margin-top:8px}
   .quote .who{margin-top:10px;font-size:12.5px;color:var(--ink3)}
+  .quote .rtitle{font-weight:800;color:var(--ink);margin-top:8px;font-size:15px}
 
   /* ---------- 신청서 ---------- */
   .formcard{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-lg);padding:22px 18px;margin-top:6px}
@@ -230,6 +235,7 @@
   }
   .bcard .tagline{display:inline-block;font-size:11.5px;font-weight:800;color:#151a22;background:var(--gold);border-radius:999px;padding:4px 10px}
   .bcard h3{margin-top:11px;color:#fff;font-size:18px}
+  .bcard .bdesc{margin-top:7px;font-size:13.5px;color:#b7bdc7}
   .bcard ul{margin:9px 0 0;padding-left:17px;font-size:13.8px;color:#c9cfd8;line-height:1.66}
   .bcard li{margin:3px 0}
   .bcard li b{color:#fff}
@@ -254,6 +260,7 @@
   footer .pv{margin-top:8px;color:#8d95a1;font-size:12px}
   footer .contact{margin-top:14px;color:#c8cdd5}
   footer .contact b{color:#fff}
+  footer .contact a{color:var(--gold);font-weight:700}
 
   /* ---------- 모바일 하단 고정 CTA ---------- */
   .stickycta{
@@ -308,21 +315,21 @@
 <!-- ================= 상단 고정 바 ================= -->
 <div class="topbar">
   <div class="wrap">
-    <div class="brandmark"><span class="dot"></span>원스텝서울 · 간판 후기 이벤트</div>
-    <div class="timer">마감까지 <b id="topTimer" class="num">--:--:--</b></div>
+    <div class="brandmark"><span class="dot"></span><span id="brandText">원스텝서울 · 간판 후기 이벤트</span></div>
+    <div class="timer"><span id="timerLabel">마감까지</span> <b id="topTimer" class="num">--:--:--</b></div>
   </div>
 </div>
 
 <!-- ================= 히어로 ================= -->
 <header class="hero">
   <div class="wrap">
-    <span class="tag"><span class="live"></span>시공하신 사장님께만 드리는 안내</span>
-    <h1>간판 후기 남기고<br><span class="hl">10,000원</span> 받으세요</h1>
-    <p class="lead">원스텝서울에서 <b>직접 시공하신 매장</b>이 대상입니다. 사진·영상 후기 한 건이면 되고, 확인 후 <b>당일 입금</b>됩니다.</p>
+    <span class="tag"><span class="live"></span><span id="heroBadge">시공하신 사장님께만 드리는 안내</span></span>
+    <h1 id="heroTitle">간판 후기 남기고<br><span class="hl">10,000원</span> 받으세요</h1>
+    <p class="lead" id="heroLead">원스텝서울에서 <b>직접 시공하신 매장</b>이 대상입니다. 사진·영상 후기 한 건이면 되고, 확인 후 <b>당일 입금</b>됩니다.</p>
 
     <div class="countdown" id="countdown">
       <div class="cd-label">
-        <span>이번 회차 신청 마감까지</span>
+        <span id="countdownLabel">이번 회차 신청 마감까지</span>
         <span class="warn" id="cdWarn">마감 임박</span>
       </div>
       <div class="cd-grid">
@@ -335,21 +342,21 @@
         <div class="cd-cell"><b id="cdS" class="num">00</b><span>초</span></div>
       </div>
       <div class="cd-foot" id="cdFoot">고객님 마감 : <b>—</b> 까지</div>
-      <!-- 잔여 자리: 실제 수치가 확정된 경우에만 아래 주석을 풀어 쓰세요. (임의 숫자 금지) -->
-      <!-- <div class="seats">이번 회차 잔여 12자리</div> -->
+      <!-- 잔여 자리: 관리자 페이지 [기본·링크 설정] > 잔여 자리 안내 에 값을 넣으면 여기에 표시됩니다. -->
+      <div class="seats" id="seats" style="display:none"></div>
     </div>
 
     <a class="btn btn-primary" href="#apply" id="heroCta">후기 이벤트 신청하기</a>
-    <p class="under-cta">30초면 끝납니다 · 1인 1회 · 후기 1건당 10,000원</p>
+    <p class="under-cta" id="heroCtaNote">30초면 끝납니다 · 1인 1회 · 후기 1건당 10,000원</p>
   </div>
 </header>
 
 <!-- ================= 3단계 ================= -->
 <section class="sec" id="how">
   <div class="wrap">
-    <h2>이렇게 하시면 됩니다</h2>
-    <p class="muted" style="margin-top:8px;font-size:14px">복잡한 절차 없이 세 단계입니다.</p>
-    <div class="steps" style="margin-top:18px">
+    <h2 id="howTitle">이렇게 하시면 됩니다</h2>
+    <p class="muted" id="howSub" style="margin-top:8px;font-size:14px">복잡한 절차 없이 세 단계입니다.</p>
+    <div class="steps" id="steps" style="margin-top:18px">
       <div class="step">
         <div class="no">1</div>
         <div>
@@ -376,8 +383,8 @@
     </div>
 
     <div class="reward">
-      <div class="amount">10,000<small>원</small></div>
-      <div class="desc">후기 1건당 · 1인 1회<br>이번 회차 마감 전 신청분에 한함</div>
+      <div class="amount" id="rewardAmount">10,000<small>원</small></div>
+      <div class="desc" id="rewardNote">후기 1건당 · 1인 1회<br>이번 회차 마감 전 신청분에 한함</div>
     </div>
   </div>
 </section>
@@ -385,21 +392,22 @@
 <!-- ================= 신뢰 요소 ================= -->
 <section class="sec-tight" id="proof">
   <div class="wrap">
-    <h2>실제 시공 사례</h2>
-    <p class="muted" style="margin-top:8px;font-size:14px">원스텝서울이 직접 시공한 매장입니다.</p>
-    <div class="cases">
-      <!-- 실제 사진으로 교체: <div class="case"><img src="case1.jpg" alt="시공 사례 1"></div> -->
+    <h2 id="proofTitle">실제 시공 사례</h2>
+    <p class="muted" id="proofSub" style="margin-top:8px;font-size:14px">원스텝서울이 직접 시공한 매장입니다.</p>
+    <div class="cases" id="caseGrid">
       <div class="case"><span><b>시공 사진 1</b>실제 사진으로<br>교체 필요</span></div>
       <div class="case"><span><b>시공 사진 2</b>실제 사진으로<br>교체 필요</span></div>
       <div class="case"><span><b>시공 사진 3</b>실제 사진으로<br>교체 필요</span></div>
     </div>
+    <div class="tiny" id="caseCaptions" style="display:none;margin-top:8px"></div>
 
     <div class="quote">
-      <div class="stars">★★★★★</div>
-      <p>“간판 교체하고 나서 저녁에 가게가 훨씬 밝아 보여요. 상담부터 시공까지 일주일 안에 끝났습니다.”</p>
-      <div class="who">— <span style="color:#b45309;font-weight:700">[실제 후기로 교체]</span> · 경기 고양시 ○○점</div>
+      <div class="stars" id="reviewStars">★★★★★</div>
+      <p class="rtitle" id="reviewTitle" style="display:none"></p>
+      <p id="reviewBody">“간판 교체하고 나서 저녁에 가게가 훨씬 밝아 보여요. 상담부터 시공까지 일주일 안에 끝났습니다.”</p>
+      <div class="who" id="reviewWho">— <span style="color:#b45309;font-weight:700">[실제 후기로 교체]</span> · 경기 고양시 ○○점</div>
     </div>
-    <p class="tiny" style="margin-top:10px">※ 사진과 후기는 실제 시공 건으로 교체해 주세요. 임의의 사진·후기를 쓰면 표시광고법 위반이 될 수 있습니다.</p>
+    <p class="tiny" id="proofNote" style="margin-top:10px">※ 사진과 후기는 실제 시공 건으로 교체해 주세요. 임의의 사진·후기를 쓰면 표시광고법 위반이 될 수 있습니다.</p>
   </div>
 </section>
 
@@ -407,10 +415,10 @@
 <section class="sec" id="apply">
   <div class="wrap">
     <div class="formcard">
-      <h2>후기 이벤트 신청서</h2>
-      <p class="sub">아래 6개 항목만 적으면 신청이 끝납니다. 신청서는 네이버 폼에서 작성합니다.</p>
+      <h2 id="applyTitle">후기 이벤트 신청서</h2>
+      <p class="sub" id="applySub">아래 6개 항목만 적으면 신청이 끝납니다. 신청서는 네이버 폼에서 작성합니다.</p>
 
-      <ul class="fields">
+      <ul class="fields" id="applyFields">
         <li><span class="k">성함<span class="req">필수</span></span><span class="v">보내드릴 분의 성함 <em>예) 홍길동</em></span></li>
         <li><span class="k">연락처<span class="req">필수</span></span><span class="v">휴대폰 번호 <em>예) 010-0000-0000</em></span></li>
         <li><span class="k">가게명<span class="req">필수</span></span><span class="v">상호명 <em>예) ○○치킨 고양점</em></span></li>
@@ -421,22 +429,21 @@
 
       <!-- ▼▼▼ 동의 블록 : 굵은 한 줄 + 체크 1개 + 접이식 약관 ▼▼▼ -->
       <div class="consent">
-        <p class="line" id="consentLine">
-          후기 이벤트 참여와 함께, 숏폼 영상 제작(월 4회)과 세무기장(1개월) 무료 혜택 안내를 받는 것에 동의합니다.
+        <p class="line" id="consentLine"><span id="consentText">후기 이벤트 참여와 함께, 숏폼 영상 제작(월 4회)과 세무기장(1개월) 무료 혜택 안내를 받는 것에 동의합니다.</span>
           <span class="must">필수</span>
         </p>
 
         <div class="checkrow">
           <input type="checkbox" id="agree" aria-describedby="agreeHelp">
           <label for="agree">
-            위 내용에 동의합니다.
+            <span id="agreeLabel">위 내용에 동의합니다.</span>
             <span class="sm" id="agreeHelp">이 체크 한 번으로 ①후기 이벤트 참여 ②숏폼 영상·세무기장 혜택 안내 수신 ③개인정보 수집·이용 동의가 함께 이루어집니다.</span>
           </label>
         </div>
 
         <details class="terms" id="terms">
-          <summary>약관 전문 보기 (제1조 ~ 제4조) <span class="chev">펼치기 ▾</span></summary>
-          <div class="terms-body">
+          <summary><span id="termsSummaryText">약관 전문 보기 (제1조 ~ 제4조)</span> <span class="chev">펼치기 ▾</span></summary>
+          <div class="terms-body" id="termsBody">
             <h4>제1조 (동의의 내용)</h4>
             <ol>
               <li><span class="key">후기 이벤트 참여와 함께, 숏폼 영상 제작(월 4회)과 세무기장(1개월) 무료 혜택 안내를 받는 것에 동의합니다.</span></li>
@@ -467,7 +474,7 @@
             <ol>
               <li>광고성 정보 수신 동의와 개인정보 수집·이용 동의는 언제든지 철회할 수 있습니다.</li>
               <li>철회 및 문의: 당근마켓 ‘원스텝서울’ 채팅, 또는 안내 문자·카톡에 회신. 접수 후 지체 없이 처리합니다.</li>
-              <li>개인정보 관련 문의: <span class="ph" style="color:#b45309">[개인정보 보호책임자 / 연락처 입력]</span></li>
+              <li>개인정보 관련 문의: <span class="key">[개인정보 보호책임자 / 연락처 입력]</span></li>
             </ol>
           </div>
         </details>
@@ -481,7 +488,7 @@
         <p class="note" id="submitNote">위 동의에 체크하시면 신청 버튼이 열립니다.</p>
       </div>
 
-      <div class="formfoot">
+      <div class="formfoot" id="formFoot">
         신청서는 네이버 폼에서 작성됩니다. 입력하신 내용은 원스텝서울 담당자만 확인합니다.
       </div>
     </div>
@@ -491,32 +498,34 @@
 <!-- ================= 혜택 (후기 이벤트 아래 부가 섹션) ================= -->
 <section class="benefits sec" id="benefits">
   <div class="wrap">
-    <p class="kicker">추가 혜택 · 원하시는 분만</p>
-    <h2>함께 받아가실 수 있는 혜택</h2>
-    <p class="sub">후기 이벤트와 별개로, 필요하신 사장님만 신청하시면 됩니다. 신청하지 않으시면 아무 비용도 발생하지 않습니다.</p>
+    <p class="kicker" id="benefitKicker">추가 혜택 · 원하시는 분만</p>
+    <h2 id="benefitTitle">함께 받아가실 수 있는 혜택</h2>
+    <p class="sub" id="benefitSub">후기 이벤트와 별개로, 필요하신 사장님만 신청하시면 됩니다. 신청하지 않으시면 아무 비용도 발생하지 않습니다.</p>
 
-    <div class="bcard">
-      <span class="tagline">월 4회 · 무료</span>
-      <h3>숏폼 영상 제작 (릴스 · 쇼츠 · 클립)</h3>
-      <ul>
-        <li>매장 사진과 짧은 인터뷰로 <b>월 4편</b>(주 1회 또는 2회) 촬영·편집해 드립니다.</li>
-        <li>완성본은 사장님 계정에 올리실 수 있게 파일로 전달합니다.</li>
-        <li>촬영·편집 비용은 받지 않습니다. 방문 일정만 맞추시면 됩니다.</li>
-      </ul>
-    </div>
+    <div id="benefitCards">
+      <div class="bcard">
+        <span class="tagline">월 4회 · 무료</span>
+        <h3>숏폼 영상 제작 (릴스 · 쇼츠 · 클립)</h3>
+        <ul>
+          <li>매장 사진과 짧은 인터뷰로 <b>월 4편</b>(주 1회 또는 2회) 촬영·편집해 드립니다.</li>
+          <li>완성본은 사장님 계정에 올리실 수 있게 파일로 전달합니다.</li>
+          <li>촬영·편집 비용은 받지 않습니다. 방문 일정만 맞추시면 됩니다.</li>
+        </ul>
+      </div>
 
-    <div class="bcard">
-      <span class="tagline">1개월 · 무료</span>
-      <h3>세무기장 (기장 대행)</h3>
-      <ul>
-        <li>매입·매출 정리와 부가세 신고 준비를 <b>1개월간</b> 담당 세무사가 맡습니다.</li>
-        <li>1개월 이후 계속하실지는 그때 결정하시면 되고, <b>계약을 강요하지 않습니다</b>.</li>
-        <li>사업자등록증 사본만 있으면 시작할 수 있습니다.</li>
-      </ul>
+      <div class="bcard">
+        <span class="tagline">1개월 · 무료</span>
+        <h3>세무기장 (기장 대행)</h3>
+        <ul>
+          <li>매입·매출 정리와 부가세 신고 준비를 <b>1개월간</b> 담당 세무사가 맡습니다.</li>
+          <li>1개월 이후 계속하실지는 그때 결정하시면 되고, <b>계약을 강요하지 않습니다</b>.</li>
+          <li>사업자등록증 사본만 있으면 시작할 수 있습니다.</li>
+        </ul>
+      </div>
     </div>
 
     <button class="btn btn-primary" id="benefitBtn" type="button">이 혜택 신청하기</button>
-    <p class="under">신청하시면 담당자가 안내 연락을 드립니다.</p>
+    <p class="under" id="benefitNote">신청하시면 담당자가 안내 연락을 드립니다.</p>
     <div class="sep"></div>
   </div>
 </section>
@@ -524,22 +533,24 @@
 <!-- ================= FAQ ================= -->
 <section class="sec" id="faq">
   <div class="wrap">
-    <h2>자주 묻는 질문</h2>
-    <details class="faq"><summary><span class="q">Q</span>입금은 언제 되나요?</summary>
-      <div class="a">담당자가 후기를 확인한 뒤 영업일 기준 당일 보내드립니다. 신청이 몰리는 날은 다음 영업일로 넘어갈 수 있습니다.</div></details>
-    <details class="faq"><summary><span class="q">Q</span>후기를 지우면 어떻게 되나요?</summary>
-      <div class="a">지급 전에 삭제된 경우 지급되지 않습니다. 지급 후 삭제가 확인되면 리워드를 환수할 수 있습니다.</div></details>
-    <details class="faq"><summary><span class="q">Q</span>후기 이벤트는 안 하고 혜택만 받을 수 있나요?</summary>
-      <div class="a">네, 아래 “이 혜택 신청하기”로 따로 신청하실 수 있습니다. 후기 이벤트에 참여하지 않으셔도 됩니다.</div></details>
-    <details class="faq"><summary><span class="q">Q</span>시공한 지 오래됐는데도 되나요?</summary>
-      <div class="a">원스텝서울 시공 건이면 시기와 상관없이 신청하실 수 있습니다. 확인을 위해 가게명과 연락처를 적어주세요.</div></details>
+    <h2 id="faqTitle">자주 묻는 질문</h2>
+    <div id="faqList">
+      <details class="faq"><summary><span class="q">Q</span>입금은 언제 되나요?</summary>
+        <div class="a">담당자가 후기를 확인한 뒤 영업일 기준 당일 보내드립니다. 신청이 몰리는 날은 다음 영업일로 넘어갈 수 있습니다.</div></details>
+      <details class="faq"><summary><span class="q">Q</span>후기를 지우면 어떻게 되나요?</summary>
+        <div class="a">지급 전에 삭제된 경우 지급되지 않습니다. 지급 후 삭제가 확인되면 리워드를 환수할 수 있습니다.</div></details>
+      <details class="faq"><summary><span class="q">Q</span>후기 이벤트는 안 하고 혜택만 받을 수 있나요?</summary>
+        <div class="a">네, 아래 “이 혜택 신청하기”로 따로 신청하실 수 있습니다. 후기 이벤트에 참여하지 않으셔도 됩니다.</div></details>
+      <details class="faq"><summary><span class="q">Q</span>시공한 지 오래됐는데도 되나요?</summary>
+        <div class="a">원스텝서울 시공 건이면 시기와 상관없이 신청하실 수 있습니다. 확인을 위해 가게명과 연락처를 적어주세요.</div></details>
+    </div>
   </div>
 </section>
 
 <!-- ================= 푸터 ================= -->
 <footer>
   <div class="wrap">
-    <div class="bizinfo">
+    <div class="bizinfo" id="bizInfo">
       <b>원스텝서울(주)</b> · 대표 여용구 · 사업자등록번호 338-86-03565<br>
       사업장: 경기도 고양시 덕양구 항공대학로 76, 한국항공대학교 산학협력관 창업보육센터 211호<br>
       대표전화: <span class="ph">[전화번호 입력]</span> · 이메일: <span class="ph">[이메일 입력]</span>
@@ -547,12 +558,12 @@
 
     <details>
       <summary>개인정보 처리방침 요약</summary>
-      <div class="pv">
-        수집 항목: 성함, 연락처, 가게명, 후기 링크·캡처, 입금 계좌(은행·예금주·계좌번호) · 이용 목적: 후기 이벤트 확인 및 리워드 지급, 숏폼 영상·세무기장 혜택 안내 · 보유 기간: 리워드 지급 완료 후 3개월 · 제3자 제공: 없음 · 위탁: 네이버 폼(접수), 이용 은행(이체) · 동의 철회: 당근 ‘원스텝서울’ 채팅으로 언제든 요청 가능 · 문의: <span class="ph">[개인정보 보호책임자 입력]</span>
+      <div class="pv" id="privacySummary">
+        수집 항목: 성함, 연락처, 가게명, 후기 링크·캡처, 입금 계좌(은행·예금주·계좌번호) · 이용 목적: 후기 이벤트 확인 및 리워드 지급, 숏폼 영상·세무기장 혜택 안내 · 보유 기간: 리워드 지급 완료 후 3개월 · 제3자 제공: 없음 · 위탁: 네이버 폼(접수), 이용 은행(이체) · 동의 철회: 당근 ‘원스텝서울’ 채팅으로 언제든 요청 가능 · 문의: [개인정보 보호책임자 입력]
       </div>
     </details>
 
-    <div class="contact">
+    <div class="contact" id="inquiryText">
       문의는 당근마켓 <b>‘원스텝서울’</b> 채팅으로 주세요. 영업일 기준 하루 안에 답드립니다.
     </div>
   </div>
@@ -561,38 +572,41 @@
 <!-- ================= 모바일 하단 고정 CTA ================= -->
 <div class="stickycta">
   <div class="row">
-    <div class="price"><b>10,000원</b><span>후기 1건당</span></div>
+    <div class="price"><b id="stickyAmount">10,000원</b><span id="stickyNote">후기 1건당</span></div>
     <a class="btn btn-primary" href="#apply" id="stickyCta">신청하기</a>
   </div>
 </div>
 
 <script>
 /* ============================================================
-   CONFIG — 여기만 고치면 됩니다.
+   원스텝서울 랜딩 — config.json 을 읽어 화면에 반영
+   ─
+   · 문구·혜택·링크·사진은 config.json(관리자 페이지에서 저장)이 원본입니다.
+   · config.json 을 못 받으면(오프라인·파일 직접 열기 등) 아래 HTML에 적힌
+     기본 문구 그대로 보여주고, 마감 계산만 기본값(5일)으로 동작합니다.
+   · ?d=3 / ?until= / ?code=A12 기능은 예전과 똑같습니다.
    ============================================================ */
-var CONFIG = {
-  // ① 네이버 폼 주소 (후기 이벤트 신청서). "https://form.naver.com/answer/XXXXXXX" 형태
-  NAVER_FORM_URL: "https://form.naver.com/answer/NAVER_FORM_ID_PLACEHOLDER",
-
-  // ② 네이버 폼 주소 (혜택 신청서 — 숏폼 영상·세무기장)
-  BENEFIT_FORM_URL: "https://form.naver.com/answer/NAVER_BENEFIT_FORM_ID_PLACEHOLDER",
-
-  // ③ 개인별 마감일을 안 정했을 때 기본 남은 일수
-  DEFAULT_DAYS: 5,
-
-  // ④ 캠페인 전체 마감일 (고정). 비워두면 ?d= 값만 사용합니다.
-  //    예) "2026-12-10T23:59:59+09:00"
-  CAMPAIGN_END: "",
-
-  // ⑤ 고객번호를 폼 링크 뒤에 붙일지 (&code=...)
-  PASS_CODE_TO_FORM: true
-};
-/* ============================================================
-   아래는 손대지 않아도 됩니다.
-   ============================================================ */
-
 (function () {
   "use strict";
+
+  var CFG_URL = "config.json";
+  var DRAFT_KEY = "onestep_landing_draft";
+
+  /* config.json 을 못 받았을 때 계산에 쓰는 최소 기본값 (화면 문구는 HTML 그대로) */
+  var BUILTIN = {
+    settings: { naverFormUrl: "", benefitFormUrl: "", defaultDays: 5, campaignEnd: "", passCodeToForm: true },
+    hero: { warnNormal: "마감 전 신청", warnSoon: "마감 임박", warnUrgent: "오늘·내일 마감", warnClosed: "이번 회차 마감",
+            deadlineLabel: "고객님 마감", deadlineSuffix: "까지", cta: "후기 이벤트 신청하기" },
+    apply: {
+      submitNoteBefore: "위 동의에 체크하시면 신청 버튼이 열립니다.",
+      submitNoteAfter: "체크하신 내용으로 신청서가 열립니다.",
+      alertFormUnset: "[안내] 네이버 폼 주소가 아직 연결되지 않았습니다.\n관리자 페이지(admin.html)의 [기본·링크 설정]에서 후기 이벤트 신청서 주소를 넣어 주세요.",
+      alertBenefitUnset: "[안내] 혜택 신청서(네이버 폼) 주소가 아직 연결되지 않았습니다.\n관리자 페이지(admin.html)의 [기본·링크 설정]에서 혜택 신청서 주소를 넣어 주세요."
+    },
+    contact: {}
+  };
+
+  var state = { cfg: BUILTIN, src: "builtin", deadline: null, timer: null };
 
   /* ---------- 1) 주소에서 값 읽기 ---------- */
   function qs(name) {
@@ -603,31 +617,31 @@ var CONFIG = {
   var qUntil = qs("until");
   var qCode = qs("code");
 
-  /* ---------- 2) 마감 시각 계산 (순수 함수 : d / until / 기본값) ---------- */
-  function computeDeadline(now, opt) {
-    var t = new Date(now.getTime());
-    // until: 지정한 시각 (KST 기준 문자열이면 +09:00 포함)
-    if (opt.until) {
-      var u = new Date(opt.until);
-      if (!isNaN(u.getTime())) return u;
-    }
-    // d: 오늘 자정 + d일의 23:59:59 (d=3 → 3일 뒤 23:59 마감)
-    if (opt.days && opt.days > 0) {
-      var base = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-      var end = new Date(base.getTime() + opt.days * 86400000);
-      end.setHours(23, 59, 59, 999);
-      return end;
-    }
-    // 캠페인 고정 마감
-    if (opt.campaignEnd) {
-      var c = new Date(opt.campaignEnd);
-      if (!isNaN(c.getTime()) && c.getTime() > t.getTime()) return c;
-    }
-    // 기본
-    var b2 = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-    var e2 = new Date(b2.getTime() + (opt.days || 5) * 86400000);
-    e2.setHours(23, 59, 59, 999);
-    return e2;
+  function $(id) { return document.getElementById(id); }
+  function setText(id, v) { var e = $(id); if (e) e.textContent = (v == null ? "" : v); }
+  function setHTML(id, h) { var e = $(id); if (e) e.innerHTML = h; }
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  function tokens(s) {
+    var c = (state.cfg && state.cfg.contact) || {};
+    var map = {
+      privacyOfficer: c.privacyOfficer || "[개인정보 보호책임자 / 연락처 입력]",
+      phone: c.phone || "[전화번호 입력]",
+      email: c.email || "[이메일 입력]",
+      company: c.companyName || "원스텝서울(주)"
+    };
+    return String(s == null ? "" : s).replace(/\{\{\s*(privacyOfficer|phone|email|company)\s*\}\}/g, function (m, k) { return map[k]; });
+  }
+  /* **굵게** , [[강조배경]] , 줄바꿈 지원 */
+  function rich(s) {
+    return esc(tokens(s))
+      .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
+      .replace(/\[\[([\s\S]+?)\]\]/g, '<span class="key">$1</span>')
+      .replace(/\n/g, "<br>");
   }
 
   function pad(n) { return (n < 10 ? "0" : "") + n; }
@@ -636,114 +650,359 @@ var CONFIG = {
     return (d.getMonth() + 1) + "월 " + d.getDate() + "일 (" + w + ") " + pad(d.getHours()) + ":" + pad(d.getMinutes());
   }
 
-  var deadline = computeDeadline(new Date(), {
-    days: qDays,
-    until: qUntil,
-    campaignEnd: CONFIG.CAMPAIGN_END
-  });
-
-  /* ---------- 3) 카운트다운 ---------- */
-  var elD = document.getElementById("cdD"),
-      elH = document.getElementById("cdH"),
-      elM = document.getElementById("cdM"),
-      elS = document.getElementById("cdS"),
-      elFoot = document.getElementById("cdFoot"),
-      elWarn = document.getElementById("cdWarn"),
-      elTop = document.getElementById("topTimer");
-
-  if (elFoot) {
-    elFoot.innerHTML = "고객님 마감 : <b>" + fmtDate(deadline) + "</b> 까지";
+  /* ---------- 2) 마감 시각 계산 (d / until / 기본값) ---------- */
+  function computeDeadline(now, opt) {
+    var t = new Date(now.getTime());
+    if (opt.until) {
+      var u = new Date(opt.until);
+      if (!isNaN(u.getTime())) return u;
+    }
+    if (opt.days && opt.days > 0) {
+      var base = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+      var end = new Date(base.getTime() + opt.days * 86400000);
+      end.setHours(23, 59, 59, 999);
+      return end;
+    }
+    if (opt.campaignEnd) {
+      var c = new Date(opt.campaignEnd);
+      if (!isNaN(c.getTime()) && c.getTime() > t.getTime()) return c;
+    }
+    var b2 = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+    var e2 = new Date(b2.getTime() + (opt.days || 5) * 86400000);
+    e2.setHours(23, 59, 59, 999);
+    return e2;
   }
 
-  function tick() {
-    var diff = deadline.getTime() - Date.now();
-    if (diff < 0) diff = 0;
-    var d = Math.floor(diff / 86400000);
-    var h = Math.floor((diff % 86400000) / 3600000);
-    var m = Math.floor((diff % 3600000) / 60000);
-    var s = Math.floor((diff % 60000) / 1000);
+  /* ---------- 3) 화면 반영 ---------- */
+  function render(cfg) {
+    var h = cfg.hero || {}, how = cfg.how || {}, pf = cfg.proof || {}, ap = cfg.apply || {},
+        bn = cfg.benefits || {}, fq = cfg.faq || {}, ct = cfg.contact || {}, br = cfg.brand || {};
 
-    if (elD) elD.textContent = String(d);
-    if (elH) elH.textContent = pad(h);
-    if (elM) elM.textContent = pad(m);
-    if (elS) elS.textContent = pad(s);
-    if (elTop) elTop.textContent = (d > 0 ? d + "일 " : "") + pad(h) + ":" + pad(m) + ":" + pad(s);
-    if (elWarn) elWarn.textContent = (d <= 1) ? "오늘·내일 마감" : (d <= 3 ? "마감 임박" : "마감 전 신청");
-    if (diff === 0 && elWarn) elWarn.textContent = "이번 회차 마감";
-    setTimeout(tick, 1000);
+    if (cfg.meta && cfg.meta.title) document.title = cfg.meta.title;
+    if (cfg.meta && cfg.meta.description) {
+      var md = document.querySelector('meta[name="description"]');
+      if (md) md.setAttribute("content", cfg.meta.description);
+    }
+
+    /* 상단 바 */
+    setText("brandText", br.topbar);
+    setText("timerLabel", br.timerLabel);
+
+    /* 히어로 */
+    setText("heroBadge", h.badge);
+    setHTML("heroTitle", esc(h.titleTop) +
+      (h.titleAmount ? '<br><span class="hl">' + esc(h.titleAmount) + "</span> " : "<br>") +
+      esc(h.titleBottom));
+    setHTML("heroLead", rich(h.lead));
+    setText("countdownLabel", h.countdownLabel);
+    setText("heroCta", h.cta);
+    setText("heroCtaNote", h.ctaNote);
+    var seats = $("seats");
+    if (seats) {
+      if (h.seats) { seats.textContent = h.seats; seats.style.display = ""; }
+      else { seats.textContent = ""; seats.style.display = "none"; }
+    }
+
+    /* 3단계 + 리워드 */
+    setText("howTitle", how.title);
+    setText("howSub", how.sub);
+    var steps = $("steps");
+    if (steps && how.steps) {
+      steps.innerHTML = how.steps.map(function (s, i) {
+        return '<div class="step"><div class="no">' + (i + 1) + "</div><div>" +
+          "<h3>" + esc(s.title) + "</h3>" +
+          "<p>" + rich(s.body) + "</p>" +
+          (s.hint ? '<span class="hint">' + esc(s.hint) + "</span>" : "") +
+          "</div></div>";
+      }).join("");
+    }
+    var rw = how.reward || {};
+    setHTML("rewardAmount", esc(rw.amount) + (rw.unit ? "<small>" + esc(rw.unit) + "</small>" : ""));
+    setHTML("rewardNote", rich(rw.note));
+
+    /* 시공 사례 + 후기 */
+    setText("proofTitle", pf.title);
+    setText("proofSub", pf.sub);
+    var grid = $("caseGrid");
+    if (grid && pf.photos) {
+      grid.innerHTML = pf.photos.slice(0, 3).map(function (p, i) {
+        if (p && p.src) {
+          return '<div class="case"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || ("시공 사진 " + (i + 1))) + '" loading="lazy"></div>';
+        }
+        return '<div class="case"><span><b>' + esc((p && p.alt) || ("시공 사진 " + (i + 1))) + "</b>" + rich(pf.photoPlaceholder || "") + "</span></div>";
+      }).join("");
+      var caps = (pf.photos || []).filter(function (p) { return p && p.caption; })
+        .map(function (p) { return esc(p.caption); });
+      var capBox = $("caseCaptions");
+      if (capBox) {
+        if (caps.length) { capBox.innerHTML = caps.join(" · "); capBox.style.display = ""; }
+        else { capBox.innerHTML = ""; capBox.style.display = "none"; }
+      }
+    }
+    var rv = pf.review || {};
+    var stars = $("reviewStars");
+    if (stars) stars.textContent = new Array(Math.max(0, Math.min(5, rv.stars || 0)) + 1).join("★");
+    var rt = $("reviewTitle");
+    if (rt) {
+      if (rv.title) { rt.textContent = rv.title; rt.style.display = ""; }
+      else { rt.textContent = ""; rt.style.display = "none"; }
+    }
+    var rb = $("reviewBody");
+    if (rb) rb.innerHTML = (rv.body ? "“" + rich(rv.body) + "”" : "");
+    var who = $("reviewWho");
+    if (who) {
+      var author = rv.author
+        ? esc(rv.author)
+        : '<span style="color:#b45309;font-weight:700">' + esc(rv.authorPlaceholder || "[실제 후기로 교체]") + "</span>";
+      who.innerHTML = "— " + author + (rv.industry ? " · " + esc(rv.industry) : "");
+    }
+    setText("proofNote", pf.note);
+
+    /* 신청서 */
+    setText("applyTitle", ap.title);
+    setText("applySub", ap.sub);
+    var fl = $("applyFields");
+    if (fl && ap.fields) {
+      fl.innerHTML = ap.fields.map(function (f) {
+        return '<li><span class="k">' + esc(f.label) +
+          '<span class="req">' + (f.required ? "필수" : "선택") + "</span></span>" +
+          '<span class="v">' + esc(f.desc) + (f.example ? " <em>" + esc(f.example) + "</em>" : "") + "</span></li>";
+      }).join("");
+    }
+    setText("consentText", ap.consentLine);
+    setText("agreeLabel", ap.agreeLabel);
+    setText("agreeHelp", ap.agreeHelp);
+    setText("submitLabel", ap.submitLabel);
+    if ($("submitBtn")) $("submitBtn").textContent = ap.submitLabel || "동의하고 신청서 작성하기";
+    setText("formFoot", ap.formFoot);
+
+    /* 약관 */
+    var tm = ap.terms || {};
+    setText("termsSummaryText", tm.summary);
+    var tb = $("termsBody");
+    if (tb && tm.sections) {
+      tb.innerHTML = tm.sections.map(function (sec) {
+        var out = "<h4>" + esc(sec.heading) + "</h4>";
+        var lines = sec.lines || [];
+        if (sec.format === "table") {
+          out += "<table>" + lines.map(function (l, i) {
+            var ix = l.indexOf("|");
+            var k = ix >= 0 ? l.slice(0, ix) : l;
+            var v = ix >= 0 ? l.slice(ix + 1) : "";
+            return "<tr><th" + (i === 0 ? ' style="width:26%"' : "") + ">" + esc(k) + "</th><td>" + rich(v) + "</td></tr>";
+          }).join("") + "</table>";
+        } else {
+          out += "<ol>" + lines.map(function (l) { return "<li>" + rich(l) + "</li>"; }).join("") + "</ol>";
+        }
+        return out;
+      }).join("");
+    }
+
+    /* 추가 혜택 */
+    setText("benefitKicker", bn.kicker);
+    setText("benefitTitle", bn.title);
+    setText("benefitSub", bn.sub);
+    var bc = $("benefitCards");
+    if (bc && bn.cards) {
+      bc.innerHTML = bn.cards.map(function (c) {
+        return '<div class="bcard">' +
+          (c.badge ? '<span class="tagline">' + esc(c.badge) + "</span>" : "") +
+          "<h3>" + esc(c.title) + "</h3>" +
+          (c.desc ? '<p class="bdesc">' + rich(c.desc) + "</p>" : "") +
+          "<ul>" + (c.items || []).map(function (it) { return "<li>" + rich(it) + "</li>"; }).join("") + "</ul>" +
+          "</div>";
+      }).join("");
+    }
+    if ($("benefitBtn")) $("benefitBtn").textContent = bn.cta || "이 혜택 신청하기";
+    setText("benefitNote", bn.note);
+
+    /* FAQ */
+    setText("faqTitle", fq.title);
+    var fqList = $("faqList");
+    if (fqList && fq.items) {
+      fqList.innerHTML = fq.items.map(function (q) {
+        return '<details class="faq"><summary><span class="q">Q</span>' + esc(q.q) + '</summary><div class="a">' + rich(q.a) + "</div></details>";
+      }).join("");
+    }
+
+    /* 연락처·사업자 */
+    var biz = $("bizInfo");
+    if (biz) {
+      var line1 = "<b>" + esc(ct.companyName || "원스텝서울(주)") + "</b>";
+      if (ct.ceo) line1 += " · 대표 " + esc(ct.ceo);
+      if (ct.bizNo) line1 += " · 사업자등록번호 " + esc(ct.bizNo);
+      var line2 = ct.address ? "사업장: " + esc(ct.address) + "<br>" : "";
+      var line3 = '대표전화: <span class="ph">' + esc(ct.phone || "[전화번호 입력]") + "</span>" +
+                  ' · 이메일: <span class="ph">' + esc(ct.email || "[이메일 입력]") + "</span>";
+      biz.innerHTML = line1 + "<br>" + line2 + line3;
+    }
+    setHTML("privacySummary", rich(ct.privacySummary));
+    var inq = $("inquiryText");
+    if (inq) {
+      var link = ct.danggeunUrl
+        ? '<br><a href="' + esc(ct.danggeunUrl) + '" target="_blank" rel="noopener">당근마켓 채팅 열기 →</a>'
+        : "";
+      inq.innerHTML = rich(ct.inquiryText) + link;
+    }
+
+    /* 하단 고정 CTA */
+    setText("stickyAmount", (rw.amount || "") + (rw.unit || ""));
+    setText("stickyNote", br.stickyNote);
   }
-  tick();
 
-  /* ---------- 4) 고객번호 표시 ---------- */
-  if (qCode) {
-    var foot = document.createElement("p");
-    foot.className = "tiny";
-    foot.style.marginTop = "10px";
-    foot.textContent = "고객번호 " + qCode + " · 이 번호를 신청서에 함께 적어주시면 확인이 빠릅니다.";
-    var anchor = document.getElementById("countdown");
-    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(foot, anchor.nextSibling);
+  /* ---------- 4) 카운트다운 (1초마다) ---------- */
+  function startTimer() {
+    if (state.timer) { clearTimeout(state.timer); state.timer = null; }
+    var h = state.cfg.hero || {};
+    var deadlines = {
+      normal: h.warnNormal || "마감 전 신청",
+      soon: h.warnSoon || "마감 임박",
+      urgent: h.warnUrgent || "오늘·내일 마감",
+      closed: h.warnClosed || "이번 회차 마감"
+    };
+    var elFoot = $("cdFoot");
+    if (elFoot) {
+      elFoot.innerHTML = esc(h.deadlineLabel || "고객님 마감") + " : <b>" + fmtDate(state.deadline) + "</b> " + esc(h.deadlineSuffix || "까지");
+    }
+    var elD = $("cdD"), elH = $("cdH"), elM = $("cdM"), elS = $("cdS"),
+        elWarn = $("cdWarn"), elTop = $("topTimer");
+
+    function tick() {
+      var diff = state.deadline.getTime() - Date.now();
+      if (diff < 0) diff = 0;
+      var d = Math.floor(diff / 86400000);
+      var hh = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      if (elD) elD.textContent = String(d);
+      if (elH) elH.textContent = pad(hh);
+      if (elM) elM.textContent = pad(m);
+      if (elS) elS.textContent = pad(s);
+      if (elTop) elTop.textContent = (d > 0 ? d + "일 " : "") + pad(hh) + ":" + pad(m) + ":" + pad(s);
+      if (elWarn) {
+        elWarn.textContent = (diff === 0) ? deadlines.closed
+          : (d <= 1 ? deadlines.urgent : (d <= 3 ? deadlines.soon : deadlines.normal));
+      }
+      state.timer = setTimeout(tick, 1000);
+    }
+    tick();
   }
 
-  /* ---------- 5) 폼 링크 만들기 ---------- */
-  function formUrl(base, code) {
-    if (!base) return "";
-    if (!CONFIG.PASS_CODE_TO_FORM || !code) return base;
-    return base + (base.indexOf("?") >= 0 ? "&" : "?") + "code=" + encodeURIComponent(code);
-  }
-  var isPlaceholder = function (u) { return !u || u.indexOf("PLACEHOLDER") >= 0; };
-
-  /* ---------- 6) 동의 체크 → 버튼 열기 ---------- */
-  var agree = document.getElementById("agree");
-  var btn = document.getElementById("submitBtn");
-  var note = document.getElementById("submitNote");
-
-  function refresh() {
+  /* ---------- 5) 동의 체크 → 버튼 열기 ---------- */
+  function refreshSubmit() {
+    var agree = $("agree"), btn = $("submitBtn"), note = $("submitNote");
+    var ap = state.cfg.apply || {};
     var ok = !!(agree && agree.checked);
     if (btn) btn.disabled = !ok;
-    if (note) {
-      note.textContent = ok
-        ? "체크하신 내용으로 신청서가 열립니다."
-        : "위 동의에 체크하시면 신청 버튼이 열립니다.";
-    }
-  }
-  if (agree) {
-    agree.addEventListener("change", refresh);
-    refresh();
+    if (note) note.textContent = ok ? (ap.submitNoteAfter || "체크하신 내용으로 신청서가 열립니다.")
+                                    : (ap.submitNoteBefore || "위 동의에 체크하시면 신청 버튼이 열립니다.");
   }
 
-  function go(url, fallbackMsg) {
-    if (isPlaceholder(url)) {
-      // 아직 네이버 폼 주소를 넣지 않은 상태 (미리보기용)
-      alert(fallbackMsg);
-      return;
-    }
-    window.location.href = formUrl(url, qCode);
+  /* ---------- 6) 폼 링크 ---------- */
+  function formUrl(base, code) {
+    if (!base) return "";
+    var s = state.cfg.settings || {};
+    if (s.passCodeToForm === false || !code) return base;
+    return base + (base.indexOf("?") >= 0 ? "&" : "?") + "code=" + encodeURIComponent(code);
+  }
+  function isUnset(u) { return !u || u.indexOf("PLACEHOLDER") >= 0; }
+  function go(base, msg) {
+    if (isUnset(base)) { alert(msg); return; }
+    window.location.href = formUrl(base, qCode);
   }
 
-  if (btn) {
-    btn.addEventListener("click", function () {
+  /* ---------- 7) 이벤트 연결 (한 번만) ---------- */
+  function bind() {
+    var agree = $("agree");
+    if (agree) agree.addEventListener("change", refreshSubmit);
+
+    var btn = $("submitBtn");
+    if (btn) btn.addEventListener("click", function () {
       if (!agree || !agree.checked) return;
-      go(CONFIG.NAVER_FORM_URL,
-        "[안내] 네이버 폼 주소가 아직 연결되지 않았습니다.\nindex.html 의 CONFIG.NAVER_FORM_URL 에 실제 폼 주소를 넣어주세요.");
+      var s = state.cfg.settings || {}, ap = state.cfg.apply || {};
+      go(s.naverFormUrl, ap.alertFormUnset || BUILTIN.apply.alertFormUnset);
     });
+
+    var bbtn = $("benefitBtn");
+    if (bbtn) bbtn.addEventListener("click", function () {
+      var s = state.cfg.settings || {}, ap = state.cfg.apply || {};
+      go(s.benefitFormUrl, ap.alertBenefitUnset || BUILTIN.apply.alertBenefitUnset);
+    });
+
+    var terms = $("terms");
+    if (terms) {
+      var chev = terms.querySelector(".chev");
+      terms.addEventListener("toggle", function () {
+        if (chev) chev.textContent = terms.open ? "접기 ▴" : "펼치기 ▾";
+      });
+    }
   }
 
-  var benefitBtn = document.getElementById("benefitBtn");
-  if (benefitBtn) {
-    benefitBtn.addEventListener("click", function () {
-      go(CONFIG.BENEFIT_FORM_URL,
-        "[안내] 혜택 신청서(네이버 폼) 주소가 아직 연결되지 않았습니다.\nindex.html 의 CONFIG.BENEFIT_FORM_URL 에 실제 폼 주소를 넣어주세요.");
-    });
+  /* ---------- 8) 부팅 ---------- */
+  function boot(cfg, src) {
+    state.cfg = cfg || BUILTIN;
+    state.src = src;
+    window.__landingConfigSource = src;
+    if (src !== "builtin") render(state.cfg);
+
+    var s = state.cfg.settings || {};
+    state.deadline = computeDeadline(new Date(), { days: qDays, until: qUntil, campaignEnd: s.campaignEnd });
+    startTimer();
+
+    if (qCode && !$("codeNote")) {
+      var foot = document.createElement("p");
+      foot.id = "codeNote";
+      foot.className = "tiny";
+      foot.style.marginTop = "10px";
+      foot.textContent = "고객번호 " + qCode + " · 이 번호를 신청서에 함께 적어주시면 확인이 빠릅니다.";
+      var anchor = $("countdown");
+      if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(foot, anchor.nextSibling);
+    }
+    refreshSubmit();
   }
 
-  /* ---------- 7) 접이식 약관 화살표 ---------- */
-  var terms = document.getElementById("terms");
-  if (terms) {
-    var chev = terms.querySelector(".chev");
-    terms.addEventListener("toggle", function () {
-      if (chev) chev.textContent = terms.open ? "접기 ▴" : "펼치기 ▾";
-    });
+  function readDraft() {
+    if (qs("draft") !== "1") return null;
+    try {
+      var raw = window.localStorage && window.localStorage.getItem(DRAFT_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
   }
+
+  function init() {
+    bind();
+    var draft = readDraft();
+    if (draft) { boot(draft, "draft"); return; }
+
+    var settled = false;
+    var guard = setTimeout(function () {
+      if (settled) return;
+      settled = true;
+      boot(BUILTIN, "builtin");
+    }, 2500);
+
+    if (!window.fetch) { clearTimeout(guard); settled = true; boot(BUILTIN, "builtin"); return; }
+
+    fetch(CFG_URL + "?t=" + Date.now(), { cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (cfg) {
+        clearTimeout(guard);
+        if (!cfg || typeof cfg !== "object") throw new Error("bad config");
+        settled = true;
+        boot(cfg, "remote");
+      })
+      .catch(function () {
+        clearTimeout(guard);
+        if (settled) return;
+        settled = true;
+        boot(BUILTIN, "builtin");
+      });
+  }
+
+  init();
 })();
 </script>
 </body>
