@@ -283,9 +283,8 @@
     <div class="row3">
       <label class="f"><span>리워드 금액</span><input type="text" data-path="how.reward.amount"></label>
       <label class="f"><span>단위</span><input type="text" data-path="how.reward.unit"></label>
-      <label class="f"><span>금액 옆 설명</span><input type="text" data-path="how.reward.note"></label>
     </div>
-  </section>
+    <label class="f"><span>금액 옆 설명 (줄바꿈 가능)</span><textarea rows="2" data-path="how.reward.note"></textarea></label>  </section>
 
   <!-- ===================== 5. 혜택2 ===================== -->
   <section class="card">
@@ -1198,7 +1197,7 @@
     unb64utf8: unb64utf8
   };
 
-  init();
+  if (!window.__adminTest) init();
 })();
 </script>
 </body>
