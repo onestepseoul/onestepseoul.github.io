@@ -460,7 +460,7 @@
   <section class="card">
     <h2><span class="n">12</span>고급 · 전체 내용 직접 보기/편집</h2>
     <p class="hint">위 화면에서 다루지 않는 값까지 손볼 때 씁니다. JSON 형식이 틀리면 적용되지 않습니다.</p>
-    <label class="f"><span>config.json 내용</span><textarea id="jsonAll" rows="14" spellcheck="false" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px"></textarea></label>
+    <label class="f"><span id="lblJsonAll">config.json 내용</span><textarea id="jsonAll" rows="14" spellcheck="false" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px"></textarea></label>
     <div class="btnrow">
       <button class="btn ghost small" type="button" id="btnJsonLoad">현재 값 불러오기</button>
       <button class="btn ghost small" type="button" id="btnJsonApply">이 내용으로 적용</button>
@@ -535,6 +535,7 @@
         lblFormA: "후기 이벤트 신청서 (네이버 폼) 주소",
         helpFormA: "신청 버튼을 누르면 이 주소로 이동합니다. 개인별 링크의 고객번호는 뒤에 &code=A12 로 자동으로 붙습니다.",
         lblFormB: "보조 신청서 (네이버 폼) 주소",
+        jsonLabel: "config.json 내용",
         lead: "이 탭은 <b>간판을 시공하신 사장님</b>에게 보내는 <b>index.html</b> 입니다. 고친 내용은 맨 아래 <b>[저장하고 사이트에 반영]</b>을 누를 때 <b>config.json</b> 으로 커밋되어 약 20~30초 뒤 사이트에 나타납니다.",
         tabInfo: "<b>index.html</b> · 설정 파일 <b>config.json</b> · 개인별 링크 <b>?d=3&amp;code=A12</b>",
         busy: "사이트 설정(config.json)을 불러오는 중…",
@@ -560,6 +561,7 @@
         lblFormA: "신청서 (네이버 폼 · 폼 B) 주소",
         helpFormA: "동의 체크 후 신청 버튼을 누르면 이 주소로 이동합니다. 개인별 링크의 고객번호는 뒤에 &code=B07 로 자동으로 붙습니다.",
         lblFormB: "보조 신청서 주소 (안 써도 됨)",
+        jsonLabel: "config-support.json 내용",
         lead: "이 탭은 <b>간판을 시공하지 않고 문의만 남기셨던 사장님</b>에게 보내는 <b>support.html</b> 입니다. 고친 내용은 <b>config-support.json</b> 으로만 커밋되며, 시공 고객용(config.json)은 건드리지 않습니다.",
         tabInfo: "<b>support.html</b> · 설정 파일 <b>config-support.json</b> · 개인별 링크 <b>?d=3&amp;code=B07</b>",
         busy: "문의 고객용 설정(config-support.json)을 불러오는 중…",
@@ -736,6 +738,7 @@
     setTxt("lblFormA", c.lblFormA);
     setTxt("helpFormA", c.helpFormA);
     setTxt("lblFormB", c.lblFormB);
+    setTxt("lblJsonAll", c.jsonLabel);
     setHtm("tabInfo", c.tabInfo);
     var sl = $("siteLink");
     if (sl) { sl.href = p.site; sl.textContent = c.siteOpenText + " ↗"; }

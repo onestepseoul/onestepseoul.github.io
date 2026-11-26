@@ -131,18 +131,21 @@ python3 _test/test_admin_api.py        # GitHub 커밋 요청
 python3 _test/test_admin_pages.py      # 관리자 탭 전환
 ```
 
-- `test_support_render.py` — 46개 항목 통과: `config-support.json` 반영 · 카드 2개(월 4회·1개월) · 3단계 · 무료 박스 · 안심 안내 3개 · 신청서 5항목 · 약관 4조/표 6행 · FAQ 6개 · `?d=3&code=B07` → “11월 29일 (일) 23:59” · 동의 체크 후 버튼 열림 · 폼 B 로 `?code=B07` 전달 · 오프라인 폴백 · 초안 키 분리 · **후기/1만원/사진 3장/15초/입금 문구 0건**
-- `test_admin_pages.py` — 34개 항목 통과: 첫 진입은 index/config.json · 탭 전환 시 config-support.json 만 요청 · 문의 탭에서 저장하면 `config-support.json` 에만 PUT · 다시 시공 탭에서 저장하면 `config.json` 에 PUT(값 섞임 없음) · 사진·후기 카드 숨김/표시 · 미리보기 주소·초안 키 분리 · 탭 기억
-- `test_admin_api.py` — 27개 항목 통과 (탭 구조로 바꾼 뒤에도 그대로)
-- `test_config_render.py` — 기존 30여 항목 중 `config.json` 값이 실제 폼 주소로 바뀐 2개 항목만 기대값이 달라짐(코드 회귀 아님). 나머지 통과
+- `test_support_render.py` — **54개 항목 통과**: `config-support.json` 반영 · 카드 2개(월 4회·1개월) · 3단계 · 무료 박스 · 안심 안내 3개 · 신청서 5항목 · 약관 4조/표 6행 · FAQ 6개 · `?d=3&code=B07` → “11월 29일 (일) 23:59” · 동의 체크 후 버튼 열림 · 폼 B 로 `?code=B07` 전달 · 오프라인 폴백 · 초안 키 분리 · **후기/1만원/사진 3장/15초/입금 문구 0건**
+- `test_admin_pages.py` — **41개 항목 통과**: 첫 진입은 index/config.json · 탭 전환 시 config-support.json 만 요청 · 문의 탭에서 저장하면 `config-support.json` 에만 PUT · 다시 시공 탭에서 저장하면 `config.json` 에 PUT(값 섞임 없음) · 사진·후기 카드 숨김/표시 · 미리보기 주소·초안 키 분리 · 탭 기억
+- `test_admin_api.py` — **26개 항목 통과** (탭 구조로 바꿈 뒤에도 그대로)
+- `test_config_render.py` — **46개 통과 / 2개 실패**: 실패한 2개는 `config.json` 의 폼 주소가 실제 주소(`naver.me/…`)로 바뀌어 “자리표시자면 안내창만 뜬다”는 옛 기대값과 달라진 것입니다(코드 회귀 아님). 폼 주소를 비우면 다시 통과합니다.
 
-### 6-2. 실제 브라우저 (배포 후)
+### 6-2. 실제 브라우저 (2026-11-26 13:40 배포본, 커밋 `39e7d1d`)
 
-- [ ] `https://onestepseoul.github.io/support.html?d=3&code=B07` HTTP 200 · 마감 “11월 29일 (일) 23:59” · 고객번호 B07
-- [ ] 동의 체크 → 버튼 열림 → 클릭 시 `form.naver.com/response/LAP18Ly71Jb`(폼 B)로 이동
-- [ ] `https://onestepseoul.github.io/` 기존 페이지 그대로 (문구·사진·폼 A)
-- [ ] `admin.html` 두 탭 전환 · 콘솔 오류 0건 · 탭별 미리보기 창
-- [ ] 원격 `config.json` 이 배포 전과 같은 내용인지 (덮어쓰지 않았는지)
+- ✅ `https://onestepseoul.github.io/support.html?d=3&code=B07` **HTTP 200** · `config-support.json` 실제 로드(remote) · 마감 “11월 29일 (일) 23:59” · 고객번호 B07 표시 · **후기/1만원/사진 3장/15초/입금 문구 0건** · `noindex, nofollow`
+- ✅ 동의 체크 → 버튼 열림(“체크하신 내용으로 신청서가 열립니다”) → 클릭 시 `https://form.naver.com/response/LAP18Ly71Jb` (원스텝서울 무료 혜택 신청서 = 폼 B) 로 이동
+  - 참고: `naver.me/GSQfqO72?code=B07` 의 `code` 는 네이버 단축 주소가 리다이렉트할 때 떨어집니다. 폼 B 에는 고객번호 문항이 없어 가게명·연락처로 구분하므로 문제는 없지만, 주소창에 번호를 남기고 싶으면 관리자 2번 카드의 신청서 주소를 `https://form.naver.com/response/LAP18Ly71Jb` 로 바꾸면 됩니다.
+- ✅ `https://onestepseoul.github.io/admin.html` — 탭 2개 표시, 첫 진입 = 시공 고객용(config.json), 탭 전환 시 문의 고객용 값으로 전부 교체(신청서 주소 `naver.me/GSQfqO72`, 제목 “무료 지원”, FAQ 6개, 안심 안내 3개), 사진·후기 카드 숨김, 고급 카드 링크/라벨 = config-support.json, **콘솔 오류 0건**(`window.__errs` 빈 배열)
+- ✅ [미리보기] → `support.html?draft=1` 새 창에 저장 전 내용 표시, 돌아와도 탭 상태 유지
+- ✅ `https://onestepseoul.github.io/?d=3&code=A12` — 기존 페이지 그대로(10,000원 후기 이벤트·사진 3칸·FAQ 4개·폼 A)
+- ✅ 원격 `config.json` — 배포 전과 동일(md5 `41f18b64…`), 이번 작업에서 건드리지 않음
+- `deployed/support-top.png` — support.html 첫 화면 캡처
 
 ---
 
