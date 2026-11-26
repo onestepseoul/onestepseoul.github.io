@@ -46,6 +46,19 @@
   main{max-width:860px;margin:0 auto;padding:14px}
   .lead{background:#fff7ef;border:1px solid #ffd9c6;border-radius:var(--radius);padding:14px;font-size:13.5px;color:#5b3a25;line-height:1.6}
   .lead b{color:#a13c10}
+
+  /* ---------- 페이지 선택 탭 ---------- */
+  .pagetabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+  @media (max-width:520px){ .pagetabs{grid-template-columns:1fr} }
+  .pagetab{display:flex;align-items:center;gap:10px;text-align:left;font:inherit;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px;color:var(--ink)}
+  .pagetab .em{font-size:20px;line-height:1}
+  .pagetab .tx b{display:block;font-size:14px;font-weight:800}
+  .pagetab .tx span{display:block;font-size:11.5px;color:var(--ink3);font-weight:600;margin-top:2px}
+  .pagetab[aria-selected="true"]{border-color:var(--brand);background:#fff7f2;box-shadow:0 0 0 3px rgba(255,90,31,.1)}
+  .pagetab[aria-selected="true"] .tx b{color:var(--brand-d)}
+  .tabinfo{margin-top:10px;font-size:12.5px;color:var(--ink2);line-height:1.6;background:#f7f9fc;border:1px solid var(--line2);border-radius:10px;padding:10px 12px}
+  .tabinfo b{color:var(--ink)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-top:12px;box-shadow:0 1px 3px rgba(16,24,40,.04)}
   .card>h2{font-size:16px;margin:0;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
   .card>h2 .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:7px;background:#1a1f27;color:#fff;font-size:12px;font-weight:800}
@@ -146,12 +159,12 @@
     <span class="chip idle" id="connBadge">토큰 미연결</span>
     <span class="chip dirty" id="dirtyBadge" style="display:none">저장 안 됨</span>
     <span class="sp"></span>
-    <a class="mini" href="https://onestepseoul.github.io/" target="_blank" rel="noopener">사이트 열기 ↗</a>
+    <a class="mini" id="siteLink" href="https://onestepseoul.github.io/" target="_blank" rel="noopener">사이트 열기 ↗</a>
   </div>
 </header>
 
 <main>
-  <div class="lead">
+  <div class="lead" id="leadBox">
     이 페이지에서 고친 내용은 맨 아래 <b>[저장하고 사이트에 반영]</b>을 누를 때 사이트의 <b>config.json</b>으로 커밋되어,
     약 20~30초 뒤 <b>https://onestepseoul.github.io/</b> 에 그대로 나타납니다.
     처음 한 번만 <b>GitHub 토큰</b>을 넣으면 되고, 토큰은 <b>이 브라우저에만</b> 저장됩니다.
@@ -193,16 +206,33 @@
     </details>
   </section>
 
+  <!-- ===================== 페이지 선택 탭 (두 페이지 모두 관리) ===================== -->
+  <section class="card" id="cardPages">
+    <h2><span class="n">⇄</span>어느 페이지를 고칠까요?</h2>
+    <p class="hint">탭을 고르면 그 페이지의 설정 파일을 불러옵니다. <b>저장하면 고른 페이지의 파일에만</b> 반영되고, 다른 페이지는 그대로 남습니다. 토큰은 두 페이지가 같이 씁니다.</p>
+    <div class="pagetabs" id="pageTabs" role="tablist">
+      <button class="pagetab" type="button" role="tab" data-page="index" id="tabIndex" aria-selected="false">
+        <span class="em">🛠️</span>
+        <span class="tx"><b>시공 고객용</b><span>후기 이벤트 · index.html</span></span>
+      </button>
+      <button class="pagetab" type="button" role="tab" data-page="support" id="tabSupport" aria-selected="false">
+        <span class="em">🏪</span>
+        <span class="tx"><b>문의 고객용</b><span>숏폼·세무기장 · support.html</span></span>
+      </button>
+    </div>
+    <div class="tabinfo" id="tabInfo"></div>
+  </section>
+
   <!-- ===================== 2. 기본·링크 ===================== -->
   <section class="card">
     <h2><span class="n">2</span>기본 · 링크 설정</h2>
     <p class="hint">신청서 주소와 마감 계산 방식입니다. 주소가 <code>PLACEHOLDER</code> 로 남아 있으면 신청 버튼을 눌러도 안내창만 뜹니다(잘못 열림 방지).</p>
 
-    <label class="f"><span>후기 이벤트 신청서 (네이버 폼) 주소</span>
+    <label class="f"><span id="lblFormA">후기 이벤트 신청서 (네이버 폼) 주소</span>
       <input type="url" data-path="settings.naverFormUrl" placeholder="https://form.naver.com/answer/XXXXXXXX">
-      <span class="help">신청 버튼을 누르면 이 주소로 이동합니다. 개인별 링크의 고객번호는 뒤에 &amp;code=A12 로 자동으로 붙습니다.</span>
+      <span class="help" id="helpFormA">신청 버튼을 누르면 이 주소로 이동합니다. 개인별 링크의 고객번호는 뒤에 &amp;code=A12 로 자동으로 붙습니다.</span>
     </label>
-    <label class="f"><span>혜택 신청서 (네이버 폼) 주소</span>
+    <label class="f"><span id="lblFormB">보조 신청서 (네이버 폼) 주소</span>
       <input type="url" data-path="settings.benefitFormUrl" placeholder="https://form.naver.com/answer/XXXXXXXX">
     </label>
     <div class="row3">
@@ -270,9 +300,9 @@
   </section>
 
   <!-- ===================== 4. 혜택1 ===================== -->
-  <section class="card">
-    <h2><span class="n">4</span>혜택 1 · 후기 이벤트 (3단계 · 리워드)</h2>
-    <p class="hint">“이렇게 하시면 됩니다” 3단계와 10,000원 리워드 박스입니다. 단계는 추가·삭제할 수 있습니다.</p>
+  <section class="card" id="cardHow">
+    <h2><span class="n">4</span><span id="h2How">혜택 1 · 후기 이벤트 (3단계 · 리워드)</span></h2>
+    <p class="hint" id="hintHow">“이렇게 하시면 됩니다” 3단계와 10,000원 리워드 박스입니다. 단계는 추가·삭제할 수 있습니다.</p>
     <div class="row2">
       <label class="f"><span>섹션 제목</span><input type="text" data-path="how.title"></label>
       <label class="f"><span>섹션 설명</span><input type="text" data-path="how.sub"></label>
@@ -287,9 +317,9 @@
     <label class="f"><span>금액 옆 설명 (줄바꿈 가능)</span><textarea rows="2" data-path="how.reward.note"></textarea></label>  </section>
 
   <!-- ===================== 5. 혜택2 ===================== -->
-  <section class="card">
-    <h2><span class="n">5</span>혜택 2 · 소상공인 추가 혜택 (카드)</h2>
-    <p class="hint">숏폼 영상·세무기장처럼 후기 이벤트와 별개로 안내하는 혜택 카드입니다. 카드마다 배지·제목·설명·목록을 고칠 수 있습니다.</p>
+  <section class="card" id="cardBenefits">
+    <h2><span class="n">5</span><span id="h2Benefits">혜택 2 · 소상공인 추가 혜택 (카드)</span></h2>
+    <p class="hint" id="hintBenefits">숏폼 영상·세무기장처럼 후기 이벤트와 별개로 안내하는 혜택 카드입니다. 카드마다 배지·제목·설명·목록을 고칠 수 있습니다.</p>
     <div class="row3">
       <label class="f"><span>작은 제목</span><input type="text" data-path="benefits.kicker"></label>
       <label class="f"><span>섹션 제목</span><input type="text" data-path="benefits.title"></label>
@@ -300,10 +330,28 @@
     <div id="cardsEditor"></div>
 
     <label class="f"><span>버튼 아래 문구</span><input type="text" data-path="benefits.note"></label>
+
+    <details class="guide" id="trustGuide">
+      <summary>문의 고객용 페이지의 ‘안심 안내’ 3개 (support.html 전용) <span style="color:#8b93a1;font-size:12px">▾</span></summary>
+      <div class="gb">
+        <p class="note">support.html 에만 나오는 섹션입니다. 시공 고객용(index.html)에는 표시되지 않습니다.</p>
+        <div class="row2">
+          <label class="f"><span>섹션 제목</span><input type="text" data-path="trust.title"></label>
+          <label class="f"><span>섹션 설명</span><input type="text" data-path="trust.sub"></label>
+        </div>
+        <label class="f"><span>1번 제목</span><input type="text" data-path="trust.items.0.title"></label>
+        <label class="f"><span>1번 설명</span><textarea rows="2" data-path="trust.items.0.body"></textarea></label>
+        <label class="f"><span>2번 제목</span><input type="text" data-path="trust.items.1.title"></label>
+        <label class="f"><span>2번 설명</span><textarea rows="2" data-path="trust.items.1.body"></textarea></label>
+        <label class="f"><span>3번 제목</span><input type="text" data-path="trust.items.2.title"></label>
+        <label class="f"><span>3번 설명</span><textarea rows="2" data-path="trust.items.2.body"></textarea></label>
+        <label class="f"><span>아래 회사 소개 한 줄</span><input type="text" data-path="trust.note"></label>
+      </div>
+    </details>
   </section>
 
   <!-- ===================== 6. 사진 ===================== -->
-  <section class="card">
+  <section class="card" id="cardPhotos">
     <h2><span class="n">6</span>시공 사진 3장</h2>
     <p class="hint">핸드폰 사진을 그대로 고르면 자동으로 줄여서(가로 1600px) 저장소 <code>images/</code> 폴더에 올라갑니다. 외부 이미지 주소를 직접 넣어도 됩니다.</p>
     <div class="photos" id="photoSlots"></div>
@@ -312,7 +360,7 @@
   </section>
 
   <!-- ===================== 7. 실제 후기 ===================== -->
-  <section class="card">
+  <section class="card" id="cardReview">
     <h2><span class="n">7</span>실제 후기 · 시공 사례 문구</h2>
     <p class="hint">실제 시공 후기를 넣어 주세요. 임의의 후기를 쓰면 표시광고법 위반이 될 수 있습니다.</p>
     <div class="row2">
@@ -418,7 +466,13 @@
       <button class="btn ghost small" type="button" id="btnJsonApply">이 내용으로 적용</button>
     </div>
     <div class="status" id="jsonStatus"></div>
-    <div class="note" style="margin-top:10px">현재 저장된 파일: <a class="inline" href="https://github.com/onestepseoul/onestepseoul.github.io/blob/main/config.json" target="_blank" rel="noopener">GitHub에서 config.json 보기</a></div>
+    <div class="note" style="margin-top:10px">현재 저장된 파일: <a class="inline" id="jsonFileLink" href="https://github.com/onestepseoul/onestepseoul.github.io/blob/main/config.json" target="_blank" rel="noopener">GitHub에서 config.json 보기</a> <span id=jsonFileName></span></div>
+  </section>
+
+  <section class="card dim">
+    <h2>페이지 주소</h2>
+    <p class="hint" style="margin-top:8px">두 페이지 모두 검색에 노출되지 않습니다(noindex). 개인별 링크는 뒤에 <code>?d=3&amp;code=A12</code> 처럼 붙이면 됩니다.</p>
+    <div class="note">· 시공 고객용: <b>https://onestepseoul.github.io/</b><br>· 문의 고객용: <b>https://onestepseoul.github.io/support.html</b></div>
   </section>
 
   <section class="card dim">
@@ -457,11 +511,67 @@
   var OWNER = "onestepseoul";
   var REPO = "onestepseoul.github.io";
   var BRANCH = "main";
-  var CFG_PATH = "config.json";
   var IMG_DIR = "images/";
   var SITE = "https://onestepseoul.github.io/";
   var TOKEN_KEY = "onestep_admin_token";
-  var PREVIEW_KEY = "onestep_landing_draft";
+  var PAGE_KEY = "onestep_admin_page";
+
+  /* 두 페이지 — 파일·미리보기 주소·초안 키만 다르고 설정 구조(JSON)는 같습니다.
+     그래서 위 카드들의 입력란이 두 페이지에 그대로 쓰입니다. */
+  var PAGES = {
+    index: {
+      id: "index",
+      name: "시공 고객용",
+      file: "config.json",
+      page: "index.html",
+      draftKey: "onestep_landing_draft",
+      site: SITE,
+      hide: [],
+      chrome: {
+        h2How: "혜택 1 · 후기 이벤트 (3단계 · 리워드)",
+        hintHow: "“이렇게 하시면 됩니다” 3단계와 10,000원 리워드 박스입니다. 단계는 추가·삭제할 수 있습니다.",
+        h2Benefits: "혜택 2 · 소상공인 추가 혜택 (카드)",
+        hintBenefits: "숏폼 영상·세무기장처럼 후기 이벤트와 별개로 안내하는 혜택 카드입니다. 카드마다 배지·제목·설명·목록을 고칠 수 있습니다.",
+        lblFormA: "후기 이벤트 신청서 (네이버 폼) 주소",
+        helpFormA: "신청 버튼을 누르면 이 주소로 이동합니다. 개인별 링크의 고객번호는 뒤에 &code=A12 로 자동으로 붙습니다.",
+        lblFormB: "보조 신청서 (네이버 폼) 주소",
+        lead: "이 탭은 <b>간판을 시공하신 사장님</b>에게 보내는 <b>index.html</b> 입니다. 고친 내용은 맨 아래 <b>[저장하고 사이트에 반영]</b>을 누를 때 <b>config.json</b> 으로 커밋되어 약 20~30초 뒤 사이트에 나타납니다.",
+        tabInfo: "<b>index.html</b> · 설정 파일 <b>config.json</b> · 개인별 링크 <b>?d=3&amp;code=A12</b>",
+        busy: "사이트 설정(config.json)을 불러오는 중…",
+        done: "‘시공 고객용(index.html)’ 설정을 불러왔습니다.",
+        failName: "config.json",
+        saveMsg: "관리자: 시공 고객용 페이지(index.html) 수정",
+        siteOpenText: "사이트 열기"
+      }
+    },
+    support: {
+      id: "support",
+      name: "문의 고객용",
+      file: "config-support.json",
+      page: "support.html",
+      draftKey: "onestep_support_draft",
+      site: SITE + "support.html",
+      hide: ["cardPhotos", "cardReview"],
+      chrome: {
+        h2How: "진행 절차 (3단계 · 무료 표시)",
+        hintHow: "“신청하고 받기까지” 3단계와 [무료] 강조 박스입니다. 단계는 추가·삭제할 수 있습니다.",
+        h2Benefits: "핵심 혜택 2개 (숏폼 영상 · 세무기장)",
+        hintBenefits: "support.html 첫 화면 아래에 크게 나오는 두 혜택 카드입니다. 배지·제목·설명·목록을 고칠 수 있습니다.",
+        lblFormA: "신청서 (네이버 폼 · 폼 B) 주소",
+        helpFormA: "동의 체크 후 신청 버튼을 누르면 이 주소로 이동합니다. 개인별 링크의 고객번호는 뒤에 &code=B07 로 자동으로 붙습니다.",
+        lblFormB: "보조 신청서 주소 (안 써도 됨)",
+        lead: "이 탭은 <b>간판을 시공하지 않고 문의만 남기셨던 사장님</b>에게 보내는 <b>support.html</b> 입니다. 고친 내용은 <b>config-support.json</b> 으로만 커밋되며, 시공 고객용(config.json)은 건드리지 않습니다.",
+        tabInfo: "<b>support.html</b> · 설정 파일 <b>config-support.json</b> · 개인별 링크 <b>?d=3&amp;code=B07</b>",
+        busy: "문의 고객용 설정(config-support.json)을 불러오는 중…",
+        done: "‘문의 고객용(support.html)’ 설정을 불러왔습니다.",
+        failName: "config-support.json",
+        saveMsg: "관리자: 문의 고객용 페이지(support.html) 수정",
+        siteOpenText: "support.html 열기"
+      }
+    }
+  };
+  var current = "index";
+  function page() { return PAGES[current]; }
 
   var draft = null;
   var loadedSha = null;
@@ -577,35 +687,113 @@
       return r.text();
     });
   }
-  /* 사이트에 공개된 config.json 은 토큰 없이도 읽을 수 있습니다. */
-  function loadPublicConfig() {
-    return fetchText("config.json?t=" + Date.now())
+  /* 사이트에 공개된 설정 파일은 토큰 없이도 읽을 수 있습니다. */
+  function loadPageConfig() {
+    return fetchText(page().file + "?t=" + Date.now())
       .then(JSON.parse)
       .catch(function () {
-        return fetchText(SITE + "config.json?t=" + Date.now()).then(JSON.parse);
+        return fetchText(SITE + page().file + "?t=" + Date.now()).then(JSON.parse);
+      });
+  }
+
+  /* ---------- 페이지 선택 탭 ---------- */
+  function bindTabs() {
+    var box = $("pageTabs");
+    if (!box) return;
+    var tabs = box.querySelectorAll(".pagetab");
+    for (var i = 0; i < tabs.length; i++) {
+      (function (btn) {
+        btn.addEventListener("click", function () { selectTab(btn.getAttribute("data-page"), {}); });
+      })(tabs[i]);
+    }
+  }
+
+  function updateTabs() {
+    var tabs = document.querySelectorAll(".pagetab");
+    for (var i = 0; i < tabs.length; i++) {
+      var on = tabs[i].getAttribute("data-page") === current;
+      tabs[i].setAttribute("aria-selected", on ? "true" : "false");
+    }
+  }
+
+  function setTxt(id, v) { var e = $(id); if (e) e.textContent = (v == null ? "" : v); }
+  function setHtm(id, v) { var e = $(id); if (e) e.innerHTML = (v == null ? "" : v); }
+
+  /* 탭에 맞춰 안내 문구·숨길 카드·링크를 바꿉니다. */
+  function applyChrome() {
+    var p = page(), c = p.chrome;
+    ["cardPhotos", "cardReview", "trustGuide"].forEach(function (id) {
+      var e = $(id);
+      if (!e) return;
+      var off = p.hide.indexOf(id) >= 0 || (id === "trustGuide" && current !== "support");
+      e.style.display = off ? "none" : "";
+    });
+    setHtm("leadBox", c.lead);
+    setTxt("h2How", c.h2How);
+    setTxt("hintHow", c.hintHow);
+    setTxt("h2Benefits", c.h2Benefits);
+    setTxt("hintBenefits", c.hintBenefits);
+    setTxt("lblFormA", c.lblFormA);
+    setTxt("helpFormA", c.helpFormA);
+    setTxt("lblFormB", c.lblFormB);
+    setHtm("tabInfo", c.tabInfo);
+    var sl = $("siteLink");
+    if (sl) { sl.href = p.site; sl.textContent = c.siteOpenText + " ↗"; }
+    var jl = $("jsonFileLink");
+    if (jl) {
+      jl.href = "https://github.com/" + OWNER + "/" + REPO + "/blob/" + BRANCH + "/" + p.file;
+      jl.textContent = "GitHub에서 " + p.file + " 보기";
+    }
+  }
+
+  /* 탭 전환: 그 페이지의 설정 파일을 불러와 폼을 다시 채웁니다. */
+  function selectTab(pid, opts) {
+    opts = opts || {};
+    if (!PAGES[pid]) pid = "index";
+    if (pid === current && !opts.force) return;
+    if (!opts.silent && dirty && !confirm("저장하지 않은 변경사항이 있습니다. 다른 페이지로 옮기면 사라집니다. 옮길까요?")) return;
+
+    if (watchTimer) { clearInterval(watchTimer); watchTimer = null; }
+    current = pid;
+    try { localStorage.setItem(PAGE_KEY, pid); } catch (e) {}
+    draft = null;
+    loadedOk = false;
+    loadedSha = null;
+    dirty = false;
+    markDirty();
+    applyChrome();
+    updateTabs();
+    $("btnSave").disabled = true;
+    $("result").hidden = true;
+    setStatus("busy", PAGES[pid].chrome.busy);
+
+    loadPageConfig()
+      .then(function (cfg) {
+        if (pid !== current) return;
+        if (!cfg || typeof cfg !== "object") throw new Error("형식이 올바르지 않습니다");
+        draft = cfg;
+        loadedOk = true;
+        dirty = false;
+        fillAll();
+        setStatus("", PAGES[pid].chrome.done + " 고친 뒤 [저장하고 사이트에 반영]을 누르세요.");
+        if (token()) verifyToken(true);
+      })
+      .catch(function (err) {
+        if (pid !== current) return;
+        loadedOk = false;
+        $("btnSave").disabled = true;
+        setStatus("bad", "‘" + PAGES[pid].name + "’ 설정 파일(" + PAGES[pid].file + ")을 불러오지 못했습니다 — " + err.message +
+          ". 새로고침하거나 인터넷 연결을 확인하세요. 이 상태에서는 저장할 수 없습니다.");
       });
   }
 
   function init() {
     bindTokenUi();
     bindActions();
-    setStatus("busy", "사이트 설정을 불러오는 중…");
-    loadPublicConfig()
-      .then(function (cfg) {
-        if (!cfg || typeof cfg !== "object") throw new Error("형식이 올바르지 않습니다");
-        draft = cfg;
-        loadedOk = true;
-        dirty = false;
-        fillAll();
-        setStatus("", "현재 사이트에 올라가 있는 내용을 불러왔습니다. 고친 뒤 [저장하고 사이트에 반영]을 누르세요.");
-        if (token()) verifyToken(true);
-      })
-      .catch(function (err) {
-        loadedOk = false;
-        $("btnSave").disabled = true;
-        setStatus("bad", "사이트 설정(config.json)을 불러오지 못했습니다 — " + err.message +
-          ". 새로고침하거나 인터넷 연결을 확인하세요. 이 상태에서는 저장할 수 없습니다.");
-      });
+    bindTabs();
+    var saved = "";
+    try { saved = localStorage.getItem(PAGE_KEY) || ""; } catch (e) {}
+    selectTab(PAGES[saved] ? saved : "index", { silent: true, force: true });
   }
 
   /* ==========================================================
@@ -665,20 +853,24 @@
 
   function refreshSha() {
     if (!token()) return Promise.resolve(null);
-    return apiGetFile(CFG_PATH).then(function (f) { loadedSha = f.sha; return loadedSha; });
+    return apiGetFile(page().file).then(function (f) { loadedSha = f.sha; return loadedSha; });
   }
 
   /* ==========================================================
      폼 채우기
      ========================================================== */
-  function fillAll() {
-    fillStatic();
+  function renderAll() {
     renderSteps();
     renderCards();
     renderFields();
     renderTerms();
     renderFaq();
-    renderPhotos();
+    if (page().hide.indexOf("cardPhotos") < 0) renderPhotos();
+  }
+
+  function fillAll() {
+    fillStatic();
+    renderAll();
     renderJson();
     markDirty();
   }
@@ -1049,7 +1241,8 @@
      ========================================================== */
   function commitConfig(text, msg, attempt) {
     attempt = attempt || 0;
-    return apiGetFile(CFG_PATH)
+    var path = page().file;
+    return apiGetFile(path)
       .then(function (f) { return f.sha; })
       .catch(function (err) {
         if (err.status === 404) return null;
@@ -1058,7 +1251,7 @@
       .then(function (sha) {
         var body = { message: msg, content: b64utf8(text), branch: BRANCH };
         if (sha) body.sha = sha;
-        return apiPut(CFG_PATH, body).catch(function (err) {
+        return apiPut(path, body).catch(function (err) {
           if (err.status === 409 && attempt < 1) return commitConfig(text, msg, attempt + 1);
           throw err;
         });
@@ -1080,10 +1273,10 @@
 
     var text = serialize();
     var stampIso = draft.updatedAt;
-    var msg = "관리자 페이지에서 사이트 내용 수정 (" + kstStamp() + ")";
+    var msg = page().chrome.saveMsg + " (" + kstStamp() + ")";
     var btn = $("btnSave");
     btn.disabled = true;
-    setStatus("busy", "저장 중… 최신 버전 확인 후 커밋합니다.");
+    setStatus("busy", "저장 중… 최신 버전 확인 후 " + page().file + " 에 커밋합니다.");
 
     commitConfig(text, msg)
       .then(function (res) {
@@ -1094,24 +1287,26 @@
         $("result").hidden = false;
         $("commitSha").textContent = commit.slice(0, 7);
         $("commitLink").href = (res.commit && res.commit.html_url) || ("https://github.com/" + OWNER + "/" + REPO + "/commits");
-        $("siteOpen").href = SITE + "?t=" + Date.now();
-        setStatus("ok", "저장 완료 (커밋 " + commit.slice(0, 7) + "). 약 20~30초 후 사이트에 반영됩니다.");
+        $("siteOpen").href = page().site + "?t=" + Date.now();
+        setStatus("ok", "저장 완료 (커밋 " + commit.slice(0, 7) + "). 약 20~30초 후 " + page().site + " 에 반영됩니다.");
         watchPropagation(stampIso);
       })
       .catch(function (err) {
         btn.disabled = false;
         if (err.status === 401) setStatus("bad", "토큰이 올바르지 않습니다. 토큰을 다시 넣어 주세요.");
         else if (err.status === 403) setStatus("bad", "저장 권한이 없습니다(403). 토큰의 Contents 권한이 Read and write 인지 확인하세요.");
-        else if (err.status === 404) setStatus("bad", "저장소/config.json을 찾지 못했습니다. 토큰의 Repository access를 확인하세요.");
+        else if (err.status === 404) setStatus("bad", "저장소/" + page().file + " 를 찾지 못했습니다. 토큰의 Repository access를 확인하세요.");
         else setStatus("bad", "저장 실패: " + err.message);
       });
   }
 
   function watchPropagation(stampIso) {
     var tries = 0;
+    var target = page().file, tabAtSave = current;
     watchTimer = setInterval(function () {
       tries++;
-      fetch("config.json?t=" + Date.now(), { cache: "no-store" })
+      if (tabAtSave !== current) { clearInterval(watchTimer); watchTimer = null; return; }
+      fetch(target + "?t=" + Date.now(), { cache: "no-store" })
         .then(function (r) { return r.json(); })
         .then(function (cfg) {
           if (cfg && cfg.updatedAt === stampIso) {
@@ -1132,16 +1327,16 @@
      ========================================================== */
   function preview() {
     if (!draft) { setStatus("bad", "불러온 내용이 없습니다."); return; }
-    try { localStorage.setItem(PREVIEW_KEY, JSON.stringify(draft)); } catch (e) {}
-    var w = window.open("index.html?draft=1&t=" + Date.now(), "_blank");
+    try { localStorage.setItem(page().draftKey, JSON.stringify(draft)); } catch (e) {}
+    var w = window.open(page().page + "?draft=1&t=" + Date.now(), "_blank");
     if (!w) { setStatus("bad", "팝업이 차단됐습니다. 브라우저의 팝업 허용을 켜 주세요."); return; }
-    setStatus("", "미리보기를 새 창에 열었습니다. (저장 전 내용이며, 이 브라우저에서만 보입니다)");
+    setStatus("", "미리보기를 새 창(" + page().page + ")에 열었습니다. (저장 전 내용이며, 이 브라우저에서만 보입니다)");
   }
 
   function reloadFromSite() {
     if (dirty && !confirm("저장하지 않은 변경사항이 있습니다. 사이트에 올라가 있는 내용으로 되돌릴까요?")) return;
     setStatus("busy", "사이트에 올라가 있는 내용을 다시 불러오는 중…");
-    loadPublicConfig()
+    loadPageConfig()
       .then(function (cfg) {
         draft = cfg; loadedOk = true; dirty = false;
         fillAll();
@@ -1163,8 +1358,8 @@
     }
     draft = parsed;
     dirty = true; markDirty();
-    fillStatic(); renderSteps(); renderCards(); renderFields(); renderTerms(); renderFaq(); renderPhotos();
-    setJsonStatus("ok", "적용했습니다. [저장하고 사이트에 반영]을 눌러야 사이트에 올라갑니다.");
+    fillStatic(); renderAll();
+    setJsonStatus("ok", "적용했습니다. [저장하고 사이트에 반영]을 눌러야 " + page().file + " 에 올라갑니다.");
   }
 
   /* ==========================================================
@@ -1188,6 +1383,10 @@
   window.__admin = {
     get draft() { return draft; },
     set draft(v) { draft = v; },
+    get page() { return current; },
+    pages: PAGES,
+    selectTab: selectTab,
+    pageFile: function () { return page().file; },
     serialize: serialize,
     commitConfig: commitConfig,
     prepareImage: prepareImage,
