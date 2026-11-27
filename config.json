@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-27T13:32:05.656Z",
+  "updatedAt": "2026-11-27T13:35:11.511Z",
   "meta": {
     "title": "원스텝서울 간판 후기 이벤트 · 후기 남기고 10,000원",
     "description": "원스텝서울에서 간판을 시공하신 사장님께만 드리는 후기 이벤트. 사진·영상 후기 1건에 10,000원 당일 입금."
@@ -8,8 +8,8 @@
   "sectionOrder": [
     "how",
     "benefits",
-    "apply",
     "proof",
+    "apply",
     "faq"
   ],
   "sections": {
