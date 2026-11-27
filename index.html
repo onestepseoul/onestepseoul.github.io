@@ -182,6 +182,7 @@
   }
   .case b{display:block;color:#7e776c;font-size:12px}
   .case img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+  .case.has-img{border:0;padding:0;background:#efeae3;overflow:hidden;box-shadow:0 2px 10px rgba(31,27,22,.10)}
 
   .quote{
     margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
@@ -810,7 +811,7 @@
     if (grid && pf.photos) {
       grid.innerHTML = pf.photos.slice(0, 3).map(function (p, i) {
         if (p && p.src) {
-          return '<div class="case"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || ("시공 사진 " + (i + 1))) + '" loading="lazy"></div>';
+          return '<div class="case has-img"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || ("시공 사진 " + (i + 1))) + '" loading="lazy"></div>';
         }
         return '<div class="case"><span><b>' + esc((p && p.alt) || ("시공 사진 " + (i + 1))) + "</b>" + rich(pf.photoPlaceholder || "") + "</span></div>";
       }).join("");
