@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>소상공인 매출 살리기 무료지원 빅 이벤트!! 꽝 없는 이벤트! 혜택 사라지기 전에 클릭 고고씽~~</title>
-<meta name="description" content="쇼츠·숏폼 영상 3개월 무료(월 4회) · 세무기장 1개월 무료. 간판 시공을 하지 않으셨어도 신청할 수 있는 소상공인 무료 지원 프로그램입니다.">
+<title>가게는 잘 되는데 검색에 안 보인다면 · 숏폼 3개월·세무기장 1개월 무료 | 원스텝서울</title>
+<meta name="description" content="간판 시공과 무관하게 신청 가능합니다. 촬영·편집비 0원, 기장료 0원.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="소상공인 매출 살리기 무료지원 빅 이벤트!! 꽝 없는 이벤트! 혜택 사라지기 전에 클릭 고고씽~~">
-<meta property="og:description" content="쇼츠·숏폼 영상 3개월 무료(월 4회) · 세무기장 1개월 무료. 간판 시공을 하지 않으셨어도 신청할 수 있는 소상공인 무료 지원 프로그램입니다.">
+<meta property="og:title" content="가게는 잘 되는데 검색에 안 보인다면 · 숏폼 3개월·세무기장 1개월 무료 | 원스텝서울">
+<meta property="og:description" content="간판 시공과 무관하게 신청 가능합니다. 촬영·편집비 0원, 기장료 0원.">
 <meta property="og:url" content="https://onestepseoul.github.io/support.html">
 <meta property="og:image" content="https://onestepseoul.github.io/og-onestep-1x1.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -66,8 +66,8 @@
     overflow-wrap:anywhere;
   }
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
-  .sec{padding:44px 0;scroll-margin-top:64px}
-  .sec-tight{padding:30px 0;scroll-margin-top:64px}
+  .sec{padding:44px 0;scroll-margin-top:86px}
+  .sec-tight{padding:30px 0;scroll-margin-top:86px}
   h1,h2,h3{margin:0;line-height:1.28;letter-spacing:-.02em}
   h1{font-size:31px;font-weight:800}
   h2{font-size:22px;font-weight:800}
@@ -86,10 +86,16 @@
     border-bottom:1px solid rgba(255,255,255,.08);
   }
   .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;height:52px}
-  .brandmark{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;letter-spacing:-.01em}
-  .brandmark .dot{display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--brand)}
-  .topbar .timer{font-size:13px;color:#ffd9c9;font-weight:700}
-  .topbar .timer b{color:#fff;font-size:15px}
+  .brandmark{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14.5px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .brandmark .dot{flex:0 0 8px;display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--brand)}
+
+  /* ---------- 상단 미니 띠 (마감 카운트다운 — 작게, 스크롤 따라다님) ---------- */
+  .minibar{background:linear-gradient(90deg,#ff6a2e,#e04a12)}
+  .minibar .wrap{display:flex;align-items:center;justify-content:space-between;gap:8px;height:auto;min-height:24px;padding-top:3px;padding-bottom:3px}
+  .minibar .lbl{font-size:11px;font-weight:700;color:#ffe6dc;letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .minibar .right{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+  .minibar .time{font-size:11.5px;font-weight:900;color:#fff;letter-spacing:.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .minibar .warn{display:inline-block;font-size:10px;font-weight:800;color:#3b1a0c;background:#ffd9a8;border-radius:999px;padding:1px 6px;white-space:nowrap}
 
   /* ---------- 히어로 ---------- */
   .hero{
@@ -116,21 +122,6 @@
   .hero .lead{font-size:15.5px;color:#d8dce3;max-width:34em}
   .hero .lead b{color:#fff}
 
-  /* 카운트다운 */
-  .countdown{
-    margin-top:22px;background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:16px 16px 14px;
-  }
-  .cd-label{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px;color:#ffd9c9;font-weight:700;letter-spacing:.02em}
-  .cd-label .warn{color:#ffb39b;font-weight:800}
-  .cd-grid{display:flex;align-items:flex-end;gap:8px;margin-top:10px}
-  .cd-cell{flex:1;text-align:center;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 4px 8px}
-  .cd-cell b{display:block;font-size:28px;line-height:1;font-weight:900;letter-spacing:-.03em}
-  .cd-cell span{display:block;margin-top:6px;font-size:12px;color:#aeb6c2;font-weight:700}
-  .cd-colon{align-self:center;padding-bottom:18px;color:#6f7885;font-weight:900}
-  .cd-foot{margin-top:10px;font-size:12.5px;color:#c7cdd6}
-  .cd-foot b{color:#fff}
-  .seats{margin-top:8px;font-size:12.5px;color:var(--gold);font-weight:700}
 
   /* 히어로 CTA */
   .btn{
@@ -312,7 +303,6 @@
   /* ---------- 반응형 ---------- */
   @media (max-width:420px){
     h1,.hero h1{font-size:28px}
-    .cd-cell b{font-size:24px}
     .fields .k{flex-basis:84px}
     .reward{flex-direction:column;align-items:flex-start;gap:4px}
   }
@@ -330,13 +320,20 @@
     footer{padding-bottom:40px}
   }
   /* ---------- 커스텀 섹션 (관리자 [섹션 구성 및 순서 관리]에서 추가) ---------- */
-  .csec .kicker{margin:0 0 6px;font-size:12.5px;font-weight:800;letter-spacing:.06em;color:var(--brand-dark)}
+  .csec .csec-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;box-shadow:var(--shadow)}
+  .csec .csec-card h2{font-size:21px}
+  .csec .kicker{margin:0 0 7px;font-size:12.5px;font-weight:800;letter-spacing:.06em;color:var(--brand-dark)}
   .csec .csec-sub{margin-top:8px;font-size:14px}
-  .csec-body{margin-top:14px}
+  .csec .csec-body{margin-top:12px}
   .csec-p{margin:8px 0;font-size:14.5px;color:var(--ink2);line-height:1.7}
+  .csec-p b{color:var(--ink)}
   .csec-list{margin:8px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink2);line-height:1.7}
   .csec-list li{margin:6px 0}
+  .csec-list li b{color:var(--ink)}
   .csec .btn{display:inline-flex;margin-top:16px}
+  /* 조건 블록 — 신청서 바로 위 */
+  .csec-cond{background:#fff8f4;border-color:#ffc9b3}
+  .csec-cond .csec-list li b{color:#8a2f0c}
 
   @media print{
     .topbar,.stickycta,.hero .btn,.benefits .btn-primary{display:none !important}
@@ -345,8 +342,6 @@
     .hero::after{display:none}
     .hero h1 .hl{color:#000}
     .hero .lead{color:#333}
-    .countdown{border:1px solid #999;background:#fff}
-    .cd-cell{background:#fff;border:1px solid #ccc}.cd-cell b,.cd-cell span{color:#000}
     .benefits{background:#fff;color:#000}
     .benefits h2,.bcard h3,.bcard li b{color:#000}
     .bcard,.bcard ul li{color:#222;border-color:#ccc;background:#fff}
@@ -360,54 +355,62 @@
 <!-- ================= 상단 고정 바 ================= -->
 <div class="topbar">
   <div class="wrap">
-    <div class="brandmark"><span class="dot"></span><span id="brandText">원스텝서울 · 소상공인 무료 지원</span></div>
-    <div class="timer"><span id="timerLabel">마감까지</span> <b id="topTimer" class="num">--:--:--</b></div>
+    <div class="brandmark"><span class="dot"></span><span id="brandText">원스텝서울 · 매출 UP · 지출 DOWN 프로젝트</span></div>
+  </div>
+  <div class="minibar" id="minibar">
+    <div class="wrap">
+      <span class="lbl" id="countdownLabel">이번 접수 마감까지</span>
+      <span class="right">
+        <b class="time num" id="topTimer">--:--:--</b>
+        <span class="warn" id="cdWarn">접수 중</span>
+      </span>
+    </div>
   </div>
 </div>
 
 <!-- ================= 히어로 ================= -->
 <header class="hero">
   <div class="wrap">
-    <span class="tag"><span class="live"></span><span id="heroBadge">문의만 남기셨어도 받으실 수 있습니다</span></span>
-    <h1 id="heroTitle">연말·연초 소상공인<br><span class="hl">무료 지원</span> 신청하세요</h1>
-    <p class="lead" id="heroLead">예전에 원스텝서울에 <b>간판 문의를 남기셨던 사장님께만</b> 드리는 안내입니다. 가게 홍보 <b>쇼츠·숏폼 영상 제작 3개월 무료(월 4회)</b>와 <b>세무기장 1개월 무료</b>를 도와드립니다. 간판을 시공하지 않으셨어도 신청하실 수 있습니다.</p>
-
-    <div class="countdown" id="countdown">
-      <div class="cd-label">
-        <span id="countdownLabel">이번 모집 마감까지</span>
-        <span class="warn" id="cdWarn">마감 임박</span>
-      </div>
-      <div class="cd-grid">
-        <div class="cd-cell"><b id="cdD" class="num">0</b><span>일</span></div>
-        <div class="cd-colon">:</div>
-        <div class="cd-cell"><b id="cdH" class="num">00</b><span>시간</span></div>
-        <div class="cd-colon">:</div>
-        <div class="cd-cell"><b id="cdM" class="num">00</b><span>분</span></div>
-        <div class="cd-colon">:</div>
-        <div class="cd-cell"><b id="cdS" class="num">00</b><span>초</span></div>
-      </div>
-      <div class="cd-foot" id="cdFoot">신청 마감 : <b>—</b> 까지</div>
-      <div class="seats" id="seats" style="display:none"></div>
-    </div>
+    <span class="tag"><span class="live"></span><span id="heroBadge">간판 시공 안 하셔도 신청됩니다</span></span>
+    <h1 id="heroTitle">가게는 잘 돌아가는데,<br><span class="hl">검색하면</span> 보이지 않는다면</h1>
+    <p class="lead" id="heroLead">간판 견적 문의 주신 김에, 원스텝서울이 준비해 둔 프로젝트 하나를 더 알려드립니다. 가게 홍보 숏폼 영상 <b>3개월(매월 4편)</b>과 <b>세무기장 1개월</b>을 무료로 진행해 드립니다. 촬영·편집비도, 기장비도 받지 않습니다.</p>
 
     <a class="btn btn-primary" href="#apply" id="heroCta">무료 혜택 신청하기</a>
-    <p class="under-cta" id="heroCtaNote">1분이면 끝납니다 · 비용 없음 · 계약 강요 없음</p>
+    <p class="under-cta" id="heroCtaNote">성함·연락처·가게명 세 칸 · 결제 없음 · 1분</p>
   </div>
 </header>
+
+<!-- ================= 왜 숏폼인가 (커스텀 섹션 · 관리자 [섹션 구성]에서 편집) ================= -->
+<section class="sec" id="why" data-section-id="why" data-fallback="1">
+  <div class="wrap csec">
+    <div class="csec-card">
+      <p class="kicker">왜 숏폼인가</p>
+      <h2>요즘 손님은, 가게 앞을 지나가기 전에 먼저 검색합니다</h2>
+      <div class="csec-body">
+        <p class="csec-p">숏폼 영상이 꾸준히 올라오는 가게는 검색했을 때 “지금도 영업 중이고, 잘 돌아가는 가게”로 읽힙니다.</p>
+        <p class="csec-p">조회수를 뽑아내는 게 목적이 아닙니다. 영상 퀄리티를 요구하지도 않습니다.</p>
+        <p class="csec-p">사장님 가게가 <b>계속 살아 있다는 것만 보이면</b> 됩니다.</p>
+        <p class="csec-p">그런데 요즘 숏폼이 하나도 없는 가게는, 손님 화면에서 아예 보이지 않습니다.</p>
+        <p class="csec-p">3개월 동안 비용은 0원입니다. 받지 않을 이유가 없는 이유입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ================= 핵심 혜택 2개 ================= -->
 <section class="benefits sec" id="benefits" data-section-id="benefits">
   <div class="wrap">
-    <p class="kicker" id="benefitKicker">이번 혜택 · 전액 무료</p>
-    <h2 id="benefitTitle">두 가지를 무료로 도와드립니다</h2>
+    <p class="kicker" id="benefitKicker">프로젝트 혜택 · 전액 무료</p>
+    <h2 id="benefitTitle">받지 않을 이유가 없는 두 가지</h2>
     <p class="sub" id="benefitSub">필요하신 것만 고르셔도 되고, 둘 다 신청하셔도 비용은 없습니다.</p>
 
     <div id="benefitCards">
       <div class="bcard">
-        <span class="tagline">3개월 무료 · 월 4회</span>
-        <h3>가게 홍보 쇼츠·숏폼 영상 제작 (3개월 무료)</h3>
+        <span class="tagline">3개월 무료 · 매월 4편</span>
+        <h3>숏폼 영상 3개월 무료 (매월 4편)</h3>
+        <p class="bdesc">촬영·편집·업로드까지 저희가 합니다. 사장님은 가게 운영만 하세요.</p>
         <ul>
-          <li><b>3개월간 매월 4편</b>(주 1회 또는 2회)을 촬영·편집해 드립니다. (3개월 총 12편)</li>
+          <li><b>3개월 동안 매월 4편</b>(총 12편)을 제작해 드립니다.</li>
           <li>완성본은 사장님 계정에 올리실 수 있게 파일로 전달합니다.</li>
           <li>촬영·편집 비용은 받지 않습니다.</li>
         </ul>
@@ -415,7 +418,8 @@
 
       <div class="bcard">
         <span class="tagline">1개월 무료</span>
-        <h3>세무기장 (1개월 무료)</h3>
+        <h3>세무기장 1개월 무료</h3>
+        <p class="bdesc">요즘 소상공인들 힘드시죠. 매달 나가는 기장료, 한 달은 저희가 덜어 드립니다.</p>
         <ul>
           <li>매입·매출 정리와 부가세 신고 준비를 <b>1개월간</b> 제휴 세무법인(세무사)이 맡습니다.</li>
           <li>신청 시 서류를 첨부하실 필요는 없으며, 진행 시 담당자가 편하게 안내해 드립니다.</li>
@@ -425,7 +429,7 @@
     </div>
 
     <a class="btn btn-primary" href="#apply" id="benefitBtn">무료 혜택 신청하기</a>
-    <p class="under" id="benefitNote">필요하시면 세무·마케팅 상담도 함께 안내해 드립니다. 신청하시면 담당자가 연락드립니다.</p>
+    <p class="under" id="benefitNote">신청하시면 담당자가 연락드립니다.</p>
     <div class="sep"></div>
   </div>
 </section>
@@ -440,30 +444,30 @@
         <div class="no">1</div>
         <div>
           <h3>신청서 작성</h3>
-          <p>아래 신청서에 <b>성함·연락처·가게명</b>과 <b>받으실 혜택</b>을 골라 적어주세요. 1분이면 끝납니다.</p>
-          <span class="hint">전화·문자로도 신청하실 수 있습니다</span>
+          <p>성함·연락처·가게명을 적고 <b>받으실 혜택</b>을 골라 주세요. 1분이면 끝납니다.</p>
+          <span class="hint">카카오톡 one289 또는 전화·문자로도 신청하실 수 있습니다</span>
         </div>
       </div>
       <div class="step">
         <div class="no">2</div>
         <div>
           <h3>담당자 연락</h3>
-          <p>영업일 기준 <b>하루 안에</b> 담당자가 전화나 문자로 연락드립니다. 방문·촬영 일정은 그때 맞추시면 됩니다.</p>
+          <p>신청을 남겨주신 고객님께 담당자가 연락드립니다. 방문·촬영 일정은 그때 맞추시면 됩니다.</p>
         </div>
       </div>
       <div class="step">
         <div class="no">3</div>
         <div>
           <h3>혜택 진행</h3>
-          <p>쇼츠·숏폼 영상은 매장에서 촬영해 편집한 뒤 <b>3개월간 매월 4편</b>을 파일로 드리고, 세무기장은 제휴 세무법인 연결로 <b>1개월</b> 무료 진행합니다.</p>
-          <span class="hint">촬영비·기장비 0원</span>
+          <p>숏폼 영상은 매장에서 촬영해 편집한 뒤 <b>3개월간 매월 4편</b>을 파일로 드리고, 세무기장은 <b>1개월</b> 무료로 진행합니다.</p>
+          <span class="hint">촬영·편집비·기장비 0원</span>
         </div>
       </div>
     </div>
 
     <div class="reward">
       <div class="amount" id="rewardAmount">무료</div>
-      <div class="desc" id="rewardNote">쇼츠·숏폼 영상 3개월 무료(월 4회) · 세무기장 1개월 무료<br>촬영·편집비, 기장비, 출장비 모두 없음</div>
+      <div class="desc" id="rewardNote">숏폼 영상 3개월 무료(매월 4편) · 세무기장 1개월 무료<br>촬영·편집비, 기장비, 출장비 모두 없음</div>
     </div>
   </div>
 </section>
@@ -472,7 +476,7 @@
 <section class="sec-tight" id="trust" data-section-id="trust">
   <div class="wrap">
     <h2 id="trustTitle">안심하고 신청하셔도 됩니다</h2>
-    <p class="muted" id="trustSub" style="margin-top:8px;font-size:14px">원스텝서울(주)가 직접 진행하는 소상공인 지원 프로그램입니다.</p>
+    <p class="muted" id="trustSub" style="margin-top:8px;font-size:14px">원스텝서울(주)가 진행하는 소상공인 매출 UP · 지출 DOWN 프로젝트입니다.</p>
     <div class="points" id="trustPoints">
       <div class="point">
         <span class="pn">1</span>
@@ -487,10 +491,26 @@
       <div class="point">
         <span class="pn">3</span>
         <h3>간판 시공 안 하셨어도</h3>
-        <p>예전에 문의만 남기셨던 사장님도 신청하실 수 있습니다. 지금 간판이 필요하지 않으셔도 됩니다.</p>
+        <p>간판 시공 여부와 상관없이 신청하실 수 있습니다. 지금 간판이 필요하지 않으셔도 됩니다.</p>
       </div>
     </div>
-    <p class="tiny" id="trustNote" style="margin-top:10px">원스텝서울(주) · 간판·옥외광고 시공 / 소상공인 마케팅·세무 지원 · 경기도 고양시 덕양구</p>
+    <p class="tiny" id="trustNote" style="margin-top:10px">원스텝서울(주) · 소상공인 영상 콘텐츠 마케팅·세무 지원</p>
+  </div>
+</section>
+
+<!-- ================= 조건 (신청서 바로 위 · 커스텀 섹션) ================= -->
+<section class="sec-tight" id="conditions" data-section-id="conditions" data-fallback="1">
+  <div class="wrap csec">
+    <div class="csec-card csec-cond">
+      <h2>조건은 이게 전부입니다.</h2>
+      <div class="csec-body">
+        <ul class="csec-list">
+          <li><b>숏폼 영상 3개월</b>(매월 4편) · <b>세무기장 1개월</b> · 촬영·편집·기장·출장비 <b>0원</b></li>
+          <li>3개월이 지난 뒤 계속하실지는 그때 사장님이 정하시면 됩니다. 세무기장을 맡기시는 경우에는 영상도 계속 무료로 진행됩니다.</li>
+          <li>간판을 시공하지 않으셔도 되고, 신청 뒤 결제를 요구하지 않습니다.</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -499,7 +519,7 @@
   <div class="wrap">
     <div class="formcard">
       <h2 id="applyTitle">무료 혜택 신청서</h2>
-      <p class="sub" id="applySub">아래 4개 항목만 적으면 신청이 끝납니다. 1분이면 끝납니다.</p>
+      <p class="sub" id="applySub">성함·연락처·가게명을 적고 받으실 혜택만 고르시면 됩니다. 1분.</p>
 
       <!-- ▼▼▼ 직접 입력 신청 폼 ▼▼▼ -->
       <form class="intake" id="intakeForm" novalidate>
@@ -611,17 +631,13 @@
     <h2 id="faqTitle">자주 묻는 질문</h2>
     <div id="faqList">
       <details class="faq"><summary><span class="q">Q</span>간판 시공을 안 했는데도 받을 수 있나요?</summary>
-        <div class="a">네. 예전에 원스텝서울에 간판 문의를 남기셨던 사장님이면 신청하실 수 있습니다. 지금 간판이 필요하지 않으셔도 됩니다.</div></details>
-      <details class="faq"><summary><span class="q">Q</span>정말 무료인가요? 나중에 돈을 내라고 하지 않나요?</summary>
-        <div class="a">촬영·편집비와 기장비를 받지 않습니다. 신청한 뒤 별도 결제를 요구하지 않으며, 유료 계약을 조건으로 하지도 않습니다.</div></details>
-      <details class="faq"><summary><span class="q">Q</span>숏폼 영상은 어떻게 만드나요?</summary>
-        <div class="a">담당자가 매장을 방문해 사진과 짧은 영상소스로 편집해, 3개월간 매월 4편(총 12편)을 파일로 드립니다. 사장님 계정에 올리시면 됩니다.</div></details>
+        <div class="a">네. 간판 시공 여부와 상관없이 신청하실 수 있습니다. 지금 간판이 필요하지 않으셔도 됩니다.</div></details>
+      <details class="faq"><summary><span class="q">Q</span>영상은 3개월 동안 몇 편 받나요?</summary>
+        <div class="a">3개월간 매월 4편(총 12편)을 제작해 파일로 드립니다. 3개월이 지난 뒤 계속하실지는 그때 직접 정하시면 됩니다.</div></details>
       <details class="faq"><summary><span class="q">Q</span>세무기장은 무엇을 해주나요?</summary>
         <div class="a">매입·매출 정리와 부가세 신고 준비를 1개월간 제휴 세무법인(세무사)이 맡습니다. 신청 시 서류를 올리실 필요는 없고, 진행 안내 시 담당자가 편하게 도와드립니다.</div></details>
-      <details class="faq"><summary><span class="q">Q</span>신청하면 언제 연락이 오나요?</summary>
-        <div class="a">영업일 기준 하루 안에 담당자가 전화나 문자로 연락드립니다. 방문 일정은 그때 맞추시면 됩니다.</div></details>
-      <details class="faq"><summary><span class="q">Q</span>혜택만 받고 그만둘 수 있나요?</summary>
-        <div class="a">네. 3개월·1개월이 지난 뒤 계속하실지는 그때 결정하시면 되고, 계약을 강요하지 않습니다.</div></details>
+      <details class="faq"><summary><span class="q">Q</span>3개월 뒤에도 계속 무료로 받을 수 있나요?</summary>
+        <div class="a">3개월이 지난 뒤 계속하실지는 그때 정하시면 됩니다. 세무기장을 저희 쪽에 맡기시는 경우에는 영상 제작도 계속 무료로 진행됩니다.</div></details>
     </div>
   </div>
 </section>
@@ -673,8 +689,8 @@
 
   /* config-support.json 을 못 받았을 때 계산에 쓰는 최소 기본값 (화면 문구는 HTML 그대로) */
   var BUILTIN = {
-    settings: { sheetWebhookUrl: "https://script.google.com/macros/s/AKfycbw_dz50eWmabML1CP5GS18ofo12mbs9ViYdOcRKxhpl4OcGg8WNiHbUhM2tvhYM9hHH/exec", naverFormUrl: "", benefitFormUrl: "", defaultDays: 5, campaignEnd: "", passCodeToForm: true },
-    hero: { warnNormal: "신청 가능", warnSoon: "마감 임박", warnUrgent: "오늘·내일 마감", warnClosed: "이번 모집 마감",
+    settings: { sheetWebhookUrl: "https://script.google.com/macros/s/AKfycbw_dz50eWmabML1CP5GS18ofo12mbs9ViYdOcRKxhpl4OcGg8WNiHbUhM2tvhYM9hHH/exec", naverFormUrl: "", benefitFormUrl: "", defaultDays: 3, campaignEnd: "", passCodeToForm: true },
+    hero: { warnNormal: "접수 중", warnSoon: "마감 3일 전", warnUrgent: "마감 1일 전", warnClosed: "접수 마감",
             deadlineLabel: "신청 마감", deadlineSuffix: "까지" },
     apply: {
       submitLabel: "신청서 제출하기",
@@ -953,7 +969,9 @@
     return [];
   }
   function customSectionHTML(item) {
-    var out = '<div class="wrap csec">';
+    var cls = "csec-card";
+    if (String(item.id || "").indexOf("cond") === 0) cls += " csec-cond";
+    var out = '<div class="wrap csec"><div class="' + cls + '">';
     if (item.kicker) out += '<p class="kicker">' + rich(item.kicker) + "</p>";
     if (item.title) out += "<h2>" + esc(item.title) + "</h2>";
     if (item.sub) out += '<p class="muted csec-sub">' + rich(item.sub) + "</p>";
@@ -965,7 +983,7 @@
     }
     if (body) out += '<div class="csec-body">' + body + "</div>";
     if (item.ctaLabel) out += '<a class="btn btn-primary" href="' + esc(item.ctaHref || "#apply") + '">' + esc(item.ctaLabel) + "</a>";
-    return out + "</div>";
+    return out + "</div></div>";
   }
   function applySections(cfg) {
     var nodes = document.querySelectorAll("[data-section-id]");
@@ -1006,7 +1024,23 @@
     for (i = 0; i < cs.length; i++) if (cs[i]) push(cs[i].id);
     for (i = 0; i < domOrder.length; i++) push(domOrder[i]);
 
+    /* HTML 안에 들어 있는 기본(폴백) 섹션 중 관리자 목록에서 빠진 것은 숨긴다.
+       (관리자에서 섹션을 지웠을 때 유령 섹션이 남지 않도록) */
+    var drop = {};
+    if (cfg && Array.isArray(cfg.customSections)) {
+      var keep = {}, k;
+      for (k = 0; k < cs.length; k++) if (cs[k] && cs[k].id) keep[String(cs[k].id)] = true;
+      for (k = 0; k < domOrder.length; k++) {
+        var fb = byId[domOrder[k]];
+        if (fb && fb.getAttribute && fb.getAttribute("data-fallback") === "1" && !keep[domOrder[k]]) {
+          drop[domOrder[k]] = true;
+          if (fb.style) fb.style.display = "none";
+        }
+      }
+    }
+
     for (i = 0; i < order.length; i++) {
+      if (drop[order[i]]) continue;
       var node = byId[order[i]];
       if (!node) continue;
       if (sectionVisible(cfg, order[i], node)) {
@@ -1020,19 +1054,20 @@
     }
   }
 
-  /* ---------- 4) 카운트다운 (1초마다) ---------- */
+  /* ---------- 4) 카운트다운 (1초마다 · 상단 미니 띠 한 줄) ---------- */
   function startTimer() {
     if (state.timer) { clearTimeout(state.timer); state.timer = null; }
     var h = state.cfg.hero || {};
-    var deadlines = {
-      normal: h.warnNormal || "신청 가능",
-      soon: h.warnSoon || "마감 임박",
-      urgent: h.warnUrgent || "오늘·내일 마감",
-      closed: h.warnClosed || "이번 모집 마감"
+    var words = {
+      normal: h.warnNormal || "접수 중",
+      soon: h.warnSoon || "마감 3일 전",
+      urgent: h.warnUrgent || "마감 1일 전",
+      closed: h.warnClosed || "접수 마감"
     };
-    var elFoot = $("cdFoot");
-    if (elFoot) {
-      elFoot.innerHTML = esc(h.deadlineLabel || "신청 마감") + " : <b>" + fmtDate(state.deadline) + "</b> " + esc(h.deadlineSuffix || "까지");
+    /* 마감 날짜는 띠를 길게 누르거나 마우스를 올리면 보이는 설명(title)으로만 둡니다. */
+    var elBar = $("minibar");
+    if (elBar && elBar.setAttribute) {
+      elBar.setAttribute("title", (h.deadlineLabel || "신청 마감") + " : " + fmtDate(state.deadline) + " " + (h.deadlineSuffix || "까지"));
     }
     var elD = $("cdD"), elH = $("cdH"), elM = $("cdM"), elS = $("cdS"),
         elWarn = $("cdWarn"), elTop = $("topTimer");
@@ -1050,8 +1085,8 @@
       if (elS) elS.textContent = pad(s);
       if (elTop) elTop.textContent = (d > 0 ? d + "일 " : "") + pad(hh) + ":" + pad(m) + ":" + pad(s);
       if (elWarn) {
-        elWarn.textContent = (diff === 0) ? deadlines.closed
-          : (d <= 1 ? deadlines.urgent : (d <= 3 ? deadlines.soon : deadlines.normal));
+        elWarn.textContent = (diff === 0) ? words.closed
+          : (diff <= 86400000 ? words.urgent : (diff <= 259200000 ? words.soon : words.normal));
       }
       state.timer = setTimeout(tick, 1000);
     }
@@ -1069,6 +1104,22 @@
 
   /* ---------- 6) 직접 입력 폼 → 구글 시트(Apps Script 웹앱)로 전송 ---------- */
   var PAGE_TYPE = "support";
+
+  /* ---------- 6-0) 같은 브라우저에서 실수로 두 번 신청하는 것 막기 ----------
+     접수를 마치면 이 브라우저(localStorage)에 최근 신청 기록을 하나 남기고,
+     다시 제출할 때는 한 번 더 확인을 받습니다. (다른 기기·다른 브라우저는 영향 없음) */
+  var LAST_KEY = "onestep_support_last_submit";
+  function storeGet(k) { try { return window.localStorage ? window.localStorage.getItem(k) : null; } catch (e) { return null; } }
+  function storeSet(k, v) { try { if (window.localStorage) window.localStorage.setItem(k, v); } catch (e) {} }
+  function lastSubmit() {
+    var raw = storeGet(LAST_KEY);
+    if (!raw) return null;
+    try { var j = JSON.parse(raw); return (j && j.at) ? j : null; } catch (e) { return null; }
+  }
+  function dayStamp(ms) { var d = new Date(Number(ms)); return (d.getMonth() + 1) + "월 " + d.getDate() + "일"; }
+  function askAgain(msg) {
+    try { return (typeof window.confirm === "function") ? !!window.confirm(msg) : true; } catch (e) { return true; }
+  }
 
   function isUnset(u) { return !u || u.indexOf("PLACEHOLDER") >= 0; }
   function val(id) { var e = $(id); return e ? String(e.value || "").trim() : ""; }
@@ -1107,6 +1158,21 @@
     if (state.sending) return;
     if (!validate()) { alert("입력하지 않으신 필수 항목이 있습니다."); return; }
 
+    /* 이 브라우저에 이미 신청 기록이 있으면 한 번 더 확인을 거칩니다. */
+    var rec = lastSubmit(), phoneNow = digits(val("fPhone"));
+    if (rec && (Date.now() - Number(rec.at)) < 7 * 86400000) {
+      var when = dayStamp(rec.at);
+      var same = !!(rec.phoneDigits && phoneNow && String(rec.phoneDigits) === phoneNow);
+      var go = askAgain(
+        "이 브라우저에서 " + when + "에 " + (same ? "같은 번호로 " : "") + "이미 신청이 접수되었습니다.\n" +
+        "실수로 두 번 접수되는 일을 막기 위해 한 번 더 확인합니다.\n\n" +
+        "그래도 다시 보낼까요?"
+      );
+      if (!go) return;
+    }
+
+    var sent = { phoneDigits: phoneNow, name: val("fName"), store: val("fStore") };
+
     var params = new URLSearchParams();
     params.set("type", PAGE_TYPE);
     params.set("code", qCode || "");
@@ -1128,6 +1194,8 @@
     function done() {
       if (settled) return; settled = true; stopTimer();
       state.sending = false; if (btn) btn.textContent = label; showDone();
+      /* 다음에 같은 브라우저에서 또 제출하면 확인을 받도록 기록을 남깁니다. */
+      storeSet(LAST_KEY, JSON.stringify({ at: Date.now(), phoneDigits: sent.phoneDigits, name: sent.name, store: sent.store }));
     }
     function fail() {
       if (settled) return; settled = true; stopTimer();
@@ -1202,6 +1270,7 @@
     var form = $("intakeForm");
     if (form) form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (state.sending) return;      /* 연타·엔터 연속 입력으로 두 번 전송되지 않도록 */
       submitIntake();
     });
 
@@ -1257,7 +1326,9 @@
     else applySections(state.cfg);
 
     var s = state.cfg.settings || {};
-    state.deadline = computeDeadline(new Date(), { days: qDays, until: qUntil, campaignEnd: s.campaignEnd });
+    var defDays = parseInt(s.defaultDays, 10);
+    if (!(defDays > 0)) defDays = 3;
+    state.deadline = computeDeadline(new Date(), { days: (qDays > 0 ? qDays : defDays), until: qUntil, campaignEnd: s.campaignEnd });
     startTimer();
 
     if (qCode && !$("codeNote")) {
@@ -1265,8 +1336,9 @@
       foot.id = "codeNote";
       foot.className = "tiny";
       foot.style.marginTop = "10px";
+      foot.style.color = "#aab2be";
       foot.textContent = "고객번호 " + qCode + " · 이 번호가 신청서와 함께 접수됩니다.";
-      var anchor = $("countdown");
+      var anchor = $("heroLead") || $("heroCta") || $("heroTitle");
       if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(foot, anchor.nextSibling);
     }
     refreshSubmit();
