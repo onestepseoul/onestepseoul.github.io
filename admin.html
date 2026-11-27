@@ -150,6 +150,28 @@
   .secrow .edit input,.secrow .edit textarea,.secrow .edit select{font-size:14px;padding:9px 10px;min-height:38px}
   .customtag{display:inline-block;font-size:10.5px;font-weight:800;color:#1f5fd0;background:#eaf1ff;border-radius:5px;padding:2px 6px;margin-left:6px;vertical-align:1px}
 
+  .secrow .pos{font-size:11px;font-weight:800;color:var(--ink3);white-space:nowrap}
+  .secrow.moved{border-color:var(--brand);box-shadow:0 0 0 3px rgba(255,90,31,.14);background:#fff8f4;transition:background .2s,border-color .2s,box-shadow .2s}
+  .secrow .tools button[title]{min-width:30px}
+
+  /* ---------- 디자인 (강조 색 · 폰트) ---------- */
+  .tsub{font-size:12.5px;font-weight:800;color:var(--ink2);margin:16px 0 7px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chipc{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:12.5px;font-weight:700;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:5px 11px 5px 6px;cursor:pointer}
+  .chipc i{display:inline-block;width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.14)}
+  .chipc[aria-pressed="true"]{border-color:#1a1f27;box-shadow:0 0 0 2px rgba(26,31,39,.13);font-weight:900}
+  .corow{display:flex;align-items:center;gap:10px;margin-top:9px;flex-wrap:wrap}
+  .corow input[type=color]{width:54px;height:42px;min-height:42px;padding:2px;border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer}
+  .corow .hex{width:112px;min-height:42px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;letter-spacing:.02em}
+  .corow .tnow{font-size:12px;color:var(--ink3);font-weight:700}
+  .themeprev{margin-top:14px;border-radius:14px;padding:18px 16px;background:linear-gradient(160deg,#1b2130,#0f131b);color:#eef1f6;border:1px solid #26304a}
+  .themeprev .pbadge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.04em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:4px 9px}
+  .themeprev h3{margin:10px 0 0;font-size:19px;line-height:1.35;font-weight:900;letter-spacing:-.01em;color:#fff}
+  .themeprev p{margin:8px 0 0;font-size:12.5px;color:#b9c2d4;line-height:1.6}
+  .themeprev .pbtn{display:inline-block;margin-top:12px;font-size:13px;font-weight:900;color:#fff;border-radius:10px;padding:10px 16px;box-shadow:0 8px 18px rgba(0,0,0,.3)}
+  .themeprev .pfoot{margin-top:11px;font-size:11.5px;color:#8c97ab}
+  .fontsel select{max-width:360px}
+
   /* ---------- 하단 고정 저장바 ---------- */
   .actionbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(6px)}
   .actionbar .in{max-width:860px;margin:0 auto}
@@ -210,6 +232,7 @@
     <h2><span class="n">↕</span>섹션 구성 및 순서 관리</h2>
     <p class="hint">
       이 페이지에 나오는 섹션의 <b>순서</b>와 <b>보이기/숨기기</b>를 직접 바꿉니다.
+      <b>⤒</b> 맨 위로 · <b>▲</b> 한 칸 위 · <b>▼</b> 한 칸 아래 · <b>⤓</b> 맨 아래로 — <b>모든 섹션</b>을 첫 화면 바로 밑부터 맨 끝까지 자유롭게 옮길 수 있습니다(신청서도 포함).
       고객에게 보이지 않게 하려면 <b>[보이기]</b> 체크를 끄면 됩니다.
       맨 아래 <b>+ 새 섹션 추가</b> 로 안내 문구 섹션을 새로 만들 수 있습니다.
     </p>
@@ -218,9 +241,52 @@
       <button class="btn ghost small" id="btnAddSection" type="button">+ 새 섹션 추가</button>
     </div>
     <p class="note" id="sectionNote">
-      숫자가 페이지에 나오는 순서입니다(위에서 아래로). 히어로(첫 화면)·푸터·하단 고정 버튼은 항상 고정입니다.
-      [신청서]는 맨 아래 신청 영역으로 남겨 두는 것을 권합니다.
+      숫자가 페이지에 나오는 순서입니다(위에서 아래로). 히어로(첫 화면)·푸터·하단 고정 버튼만 항상 고정이고,
+      나머지는 위아래 어디로든 옮길 수 있습니다. 저장하면 사이트 순서도 그대로 바뀝니다.
     </p>
+  </section>
+
+  <!-- ===================== 디자인 (강조 색 · 폰트) ===================== -->
+  <section class="card" id="cardTheme">
+    <h2><span class="n">🎨</span>디자인 — 강조 색 · 폰트</h2>
+    <p class="hint">
+      <b>버튼·포인트 색</b>과 <b>제목 강조 글자 색</b>, 페이지 <b>글꼴</b>을 바꿉니다.
+      고른 값은 이 페이지 설정 파일의 <code>theme</code> 에 저장되고, <b>[저장하고 사이트에 반영]</b> 후 사이트에 적용됩니다.
+      아무것도 고르지 않으면 지금 화면 그대로입니다.
+    </p>
+
+    <div class="tsub">① 버튼 · 포인트 색</div>
+    <div class="chips" id="accentChips"></div>
+    <div class="corow">
+      <input type="color" id="themeAccentColor" aria-label="버튼 색 직접 고르기">
+      <input type="text" class="hex" id="themeAccentHex" maxlength="7" spellcheck="false" placeholder="#ff5a1f" aria-label="버튼 색 코드">
+      <span class="tnow">← 색을 직접 고르거나 코드를 적으세요</span>
+    </div>
+
+    <div class="tsub">② 제목 강조 글자 색 (첫 화면 ‘10,000원’처럼 강조된 글자)</div>
+    <div class="chips" id="highlightChips"></div>
+    <div class="corow">
+      <input type="color" id="themeHighlightColor" aria-label="강조 글자 색 직접 고르기">
+      <input type="text" class="hex" id="themeHighlightHex" maxlength="7" spellcheck="false" placeholder="#ffcf5c" aria-label="강조 글자 색 코드">
+      <span class="tnow">← 색을 직접 고르거나 코드를 적으세요</span>
+    </div>
+
+    <div class="tsub">③ 글꼴</div>
+    <label class="f fontsel"><span>페이지 글꼴</span><select id="themeFont"></select>
+      <span class="help">첫 화면·본문 전체에 적용됩니다. 휴대폰에서도 같게 보이도록 웹폰트로 불러옵니다.</span>
+    </label>
+
+    <div class="themeprev" id="themePreview">
+      <span class="pbadge">미리보기</span>
+      <h3>간판 후기 남기고 <span id="pvHl">10,000원</span> 받으세요</h3>
+      <p>버튼 색 · 강조 글자 색 · 글꼴이 사이트에 이렇게 적용됩니다.</p>
+      <div><span class="pbtn" id="pvBtn">후기 이벤트 신청하기</span></div>
+      <div class="pfoot" id="pvFontName">글꼴: 시스템 기본 (지금 그대로)</div>
+    </div>
+
+    <div class="btnrow">
+      <button class="btn ghost small" id="btnThemeReset" type="button">기본 색 · 글꼴로 되돌리기</button>
+    </div>
   </section>
 
   <section class="card">
@@ -901,6 +967,7 @@
      폼 채우기
      ========================================================== */
   function renderAll() {
+    renderTheme();
     renderSections();
     renderSteps();
     renderCards();
@@ -956,9 +1023,10 @@
     if (text != null) e.textContent = text;
     return e;
   }
-  function toolBtn(label, fn, cls) {
+  function toolBtn(label, fn, cls, title) {
     var b = el("button", cls || "", label);
     b.type = "button";
+    if (title) { b.title = title; b.setAttribute("aria-label", title); }
     b.addEventListener("click", fn);
     return b;
   }
@@ -1097,6 +1165,250 @@
     });
   }
 
+  /* ---------- 3-0) 테마: 강조 색 · 폰트 (config.theme) ----------
+     관리자 [디자인 — 강조 색 · 폰트] 카드에서 고른 값이 config 의 theme 객체에 들어 있습니다.
+       theme.accentColor    → --brand / --brand-dark  (버튼·포인트 색)
+       theme.highlightColor → --gold                  (히어로 제목 강조 글자 색)
+       theme.fontKey / theme.fontFamily → 웹폰트 로드 + body 글꼴
+     theme 가 없거나 값이 비어 있으면 지금 CSS 기본값(주황·노랑·시스템 글꼴) 그대로 둡니다. */
+  var THEME_FONTS = {
+    system: {
+      label: "시스템 기본 (지금 그대로)",
+      stack: "",
+      css: ""
+    },
+    pretendard: {
+      label: "Pretendard (추천)",
+      css: "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css",
+      stack: '"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Noto Sans KR","Helvetica Neue",Arial,sans-serif'
+    },
+    notosanskr: {
+      label: "Noto Sans KR (본고딕)",
+      css: "https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap",
+      stack: '"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Helvetica Neue",Arial,sans-serif'
+    },
+    nanumgothic: {
+      label: "나눔고딕",
+      css: "https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap",
+      stack: '"Nanum Gothic",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Helvetica Neue",Arial,sans-serif'
+    },
+    nanummyeongjo: {
+      label: "나눔명조",
+      css: "https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap",
+      stack: '"Nanum Myeongjo",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Helvetica Neue",Arial,sans-serif'
+    },
+    gmarketsans: {
+      label: "G마켓 산스",
+      faces: [
+        { weight: "300", src: "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff" },
+        { weight: "500", src: "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff" },
+        { weight: "700", src: "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff" }
+      ],
+      stack: '"Gmarket Sans",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Noto Sans KR",sans-serif'
+    },
+    blackhansans: {
+      label: "검은고딕 (Black Han Sans)",
+      css: "https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap",
+      stack: '"Black Han Sans",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Noto Sans KR",sans-serif'
+    }
+  };
+  var themeFontLoaded = {};
+
+  function themeColor(v) {
+    var s = String(v == null ? "" : v).trim();
+    if (/^#[0-9a-fA-F]{6}$/.test(s)) return s.toLowerCase();
+    if (/^#[0-9a-fA-F]{3}$/.test(s)) {
+      return ("#" + s[1] + s[1] + s[2] + s[2] + s[3] + s[3]).toLowerCase();
+    }
+    return "";
+  }
+  /* 색을 k 만큼 어둡게 (눌림·진한 포인트 색) */
+  function themeShade(hex, k) {
+    var c = themeColor(hex);
+    if (!c) return "";
+    var n = parseInt(c.slice(1), 16);
+    var r = Math.round(((n >> 16) & 255) * k),
+        g = Math.round(((n >> 8) & 255) * k),
+        b = Math.round((n & 255) * k);
+    function h(x) { return ("0" + x.toString(16)).slice(-2); }
+    return "#" + h(r) + h(g) + h(b);
+  }
+  /* 색을 흰색 쪽으로 k 만큼 밝게 (연한 배경) */
+  function themeTint(hex, k) {
+    var c = themeColor(hex);
+    if (!c) return "";
+    var n = parseInt(c.slice(1), 16);
+    var r = Math.round(((n >> 16) & 255) + (255 - ((n >> 16) & 255)) * k),
+        g = Math.round(((n >> 8) & 255) + (255 - ((n >> 8) & 255)) * k),
+        b = Math.round((n & 255) + (255 - (n & 255)) * k);
+    function h(x) { return ("0" + x.toString(16)).slice(-2); }
+    return "#" + h(r) + h(g) + h(b);
+  }
+  function themeRgb(hex) {
+    var c = themeColor(hex);
+    if (!c) return "";
+    var n = parseInt(c.slice(1), 16);
+    return ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255);
+  }
+  function themeKeyFromFamily(family) {
+    var s = String(family || "").toLowerCase();
+    if (!s) return "";
+    if (s.indexOf("gmarket") >= 0) return "gmarketsans";
+    if (s.indexOf("black han") >= 0) return "blackhansans";
+    if (s.indexOf("nanum myeongjo") >= 0) return "nanummyeongjo";
+    if (s.indexOf("nanum gothic") >= 0) return "nanumgothic";
+    if (s.indexOf("noto sans kr") >= 0) return "notosanskr";
+    if (s.indexOf("pretendard") >= 0) return "pretendard";
+    return "";
+  }
+  function themeLoadFont(key) {
+    var f = THEME_FONTS[key];
+    if (!f || themeFontLoaded[key] || key === "system") return;
+    themeFontLoaded[key] = true;
+    var head = document.head || document.getElementsByTagName("head")[0];
+    if (!head) return;
+    if (f.css) {
+      var l = document.createElement("link");
+      l.id = "theme-font-" + key;
+      l.rel = "stylesheet";
+      l.href = f.css;
+      head.appendChild(l);
+      return;
+    }
+    if (f.faces && f.faces.length) {
+      var css = "";
+      for (var i = 0; i < f.faces.length; i++) {
+        css += '@font-face{font-family:"Gmarket Sans";font-style:normal;font-weight:' + f.faces[i].weight +
+               ';font-display:swap;src:url("' + f.faces[i].src + '") format("woff")}';
+      }
+      var st = document.createElement("style");
+      st.id = "theme-font-" + key;
+      st.appendChild(document.createTextNode(css));
+      head.appendChild(st);
+    }
+  }
+
+  var THEME_ACCENT_PRESETS = [
+    ["기본 오렌지", "#ff5a1f"], ["빨강", "#e23b2e"], ["파랑", "#2563eb"], ["네이비", "#1f2a44"],
+    ["초록", "#0f9d58"], ["보라", "#7c3aed"], ["핑크", "#e23b8a"], ["검정", "#181818"]
+  ];
+  var THEME_HIGHLIGHT_PRESETS = [
+    ["기본 노랑", "#ffcf5c"], ["주황", "#ffb020"], ["하늘", "#7fd3ff"],
+    ["민트", "#5be0b5"], ["분홍", "#ff9ec4"], ["흰색", "#ffffff"]
+  ];
+  var THEME_DEFAULTS = { accentColor: "#ff5a1f", highlightColor: "#ffcf5c", fontKey: "system", fontFamily: "" };
+
+  function ensureTheme() {
+    if (!draft) return null;
+    if (!draft.theme || typeof draft.theme !== "object" || Array.isArray(draft.theme)) draft.theme = {};
+    var t = draft.theme, d = THEME_DEFAULTS;
+    if (!themeColor(t.accentColor)) t.accentColor = d.accentColor;
+    if (!themeColor(t.highlightColor)) t.highlightColor = d.highlightColor;
+    if (!t.fontKey || !THEME_FONTS[t.fontKey]) {
+      var k = themeKeyFromFamily(t.fontFamily);
+      t.fontKey = k || "system";
+      if (!k) t.fontFamily = t.fontFamily || "";
+    }
+    if (t.fontKey === "system") t.fontFamily = "";
+    else if (!t.fontFamily) t.fontFamily = THEME_FONTS[t.fontKey].stack;
+    return t;
+  }
+
+  function themeSet(key, val) {
+    if (!draft) return;
+    var t = ensureTheme();
+    if (key === "fontKey") {
+      if (!THEME_FONTS[val]) return;
+      t.fontKey = val;
+      t.fontFamily = (val === "system") ? "" : THEME_FONTS[val].stack;
+      themeLoadFont(val);
+    } else {
+      var c = themeColor(val);
+      if (!c) return;
+      t[key] = c;
+    }
+    dirty = true; markDirty();
+    renderTheme();
+  }
+
+  function themeReset() {
+    if (!draft) return;
+    if (!confirm("강조 색과 글꼴을 기본값(주황·노랑·시스템 글꼴)으로 되돌릴까요?")) return;
+    draft.theme = { accentColor: THEME_DEFAULTS.accentColor, highlightColor: THEME_DEFAULTS.highlightColor, fontKey: "system", fontFamily: "" };
+    dirty = true; markDirty();
+    renderTheme();
+  }
+
+  function buildChips(host, presets, key, now) {
+    if (!host) return;
+    host.innerHTML = "";
+    presets.forEach(function (p) {
+      var b = el("button", "chipc");
+      b.type = "button";
+      var dot = document.createElement("i");
+      dot.style.background = p[1];
+      b.appendChild(dot);
+      b.appendChild(document.createTextNode(p[0]));
+      b.setAttribute("aria-pressed", themeColor(now) === themeColor(p[1]) ? "true" : "false");
+      b.setAttribute("data-color", p[1]);
+      b.addEventListener("click", function () { themeSet(key, p[1]); });
+      host.appendChild(b);
+    });
+  }
+
+  function renderTheme() {
+    if (!draft) return;
+    var t = ensureTheme();
+    var acc = themeColor(t.accentColor), hl = themeColor(t.highlightColor);
+
+    buildChips($("accentChips"), THEME_ACCENT_PRESETS, "accentColor", acc);
+    buildChips($("highlightChips"), THEME_HIGHLIGHT_PRESETS, "highlightColor", hl);
+
+    if ($("themeAccentColor")) $("themeAccentColor").value = acc;
+    if ($("themeAccentHex")) $("themeAccentHex").value = acc;
+    if ($("themeHighlightColor")) $("themeHighlightColor").value = hl;
+    if ($("themeHighlightHex")) $("themeHighlightHex").value = hl;
+
+    var sel = $("themeFont");
+    if (sel && !sel._built) {
+      sel._built = true;
+      Object.keys(THEME_FONTS).forEach(function (k) {
+        var op = document.createElement("option");
+        op.value = k;
+        op.textContent = THEME_FONTS[k].label;
+        sel.appendChild(op);
+      });
+      sel.addEventListener("change", function () { themeSet("fontKey", sel.value); });
+    }
+    if (sel) sel.value = t.fontKey || "system";
+
+    var pv = $("themePreview");
+    if (pv) {
+      var f = THEME_FONTS[t.fontKey] || THEME_FONTS.system;
+      themeLoadFont(t.fontKey);
+      pv.style.fontFamily = f.stack || "";
+      if ($("pvHl")) $("pvHl").style.color = hl;
+      if ($("pvBtn")) $("pvBtn").style.background = acc;
+      if ($("pvFontName")) $("pvFontName").textContent = "글꼴: " + (f.label || "시스템 기본") + " · 버튼 " + acc + " · 강조 " + hl;
+    }
+  }
+
+  function bindThemeUi() {
+    [["themeAccentColor", "accentColor", "themeAccentHex"], ["themeHighlightColor", "highlightColor", "themeHighlightHex"]].forEach(function (pair) {
+      var col = $(pair[0]), hex = $(pair[2]);
+      if (col) col.addEventListener("input", function () { themeSet(pair[1], col.value); });
+      if (hex) {
+        hex.addEventListener("change", function () {
+          var c = themeColor(hex.value);
+          if (c) themeSet(pair[1], c);
+          else renderTheme();
+        });
+        hex.addEventListener("blur", function () { renderTheme(); });
+      }
+    });
+    if ($("btnThemeReset")) $("btnThemeReset").addEventListener("click", themeReset);
+  }
+
   /* ==========================================================
      섹션 구성 및 순서
      ─ 페이지에 나오는 섹션의 순서·보이기 여부는 config 의
@@ -1187,6 +1499,16 @@
     dirty = true; markDirty(); renderSections();
     scrollRow(idx);
   }
+  /* 맨 위(0) · 맨 아래(끝)로 한 번에 옮기기 */
+  function moveTo(idx, target) {
+    var arr = draft && draft.sectionOrder;
+    if (!arr || idx < 0 || idx >= arr.length) return;
+    target = Math.max(0, Math.min(arr.length - 1, target));
+    if (target === idx) return;
+    var item = arr.splice(idx, 1)[0];
+    arr.splice(target, 0, item);
+    dirty = true; markDirty(); renderSections(target);
+  }
   function scrollRow(idx) {
     var host = $("sectionList");
     if (!host || !host.children || !host.children[idx]) return;
@@ -1275,12 +1597,18 @@
       onoff.appendChild(el("span", null, "보이기"));
       hd.appendChild(onoff);
 
+      hd.appendChild(el("span", "pos", (idx + 1) + " / " + order.length));
+
       var tools = el("div", "tools");
-      var up = toolBtn("▲", function () { moveSection(idx, -1); });
+      var toTop = toolBtn("⤒", function () { moveTo(idx, 0); }, null, "맨 위로 (첫 화면 바로 밑)");
+      if (idx === 0) toTop.disabled = true;
+      var up = toolBtn("▲", function () { moveSection(idx, -1); }, null, "한 칸 위로");
       if (idx === 0) up.disabled = true;
-      var down = toolBtn("▼", function () { moveSection(idx, 1); });
+      var down = toolBtn("▼", function () { moveSection(idx, 1); }, null, "한 칸 아래로");
       if (idx === order.length - 1) down.disabled = true;
-      tools.appendChild(up); tools.appendChild(down);
+      var toBottom = toolBtn("⤓", function () { moveTo(idx, order.length - 1); }, null, "맨 아래로");
+      if (idx === order.length - 1) toBottom.disabled = true;
+      tools.appendChild(toTop); tools.appendChild(up); tools.appendChild(down); tools.appendChild(toBottom);
       if (isCustom) tools.appendChild(toolBtn("삭제", function () { delSection(id); }, "danger"));
       hd.appendChild(tools);
       row.appendChild(hd);
@@ -1616,6 +1944,7 @@
     $("btnJsonLoad").addEventListener("click", function () { renderJson(); setJsonStatus("", "현재 편집 중인 값을 다시 채웠습니다."); });
     $("btnJsonApply").addEventListener("click", applyJson);
     if ($("btnAddSection")) $("btnAddSection").addEventListener("click", addSection);
+    bindThemeUi();
   }
 
   window.addEventListener("beforeunload", function (e) {
