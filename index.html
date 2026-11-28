@@ -13,8 +13,8 @@
 <meta property="og:image" content="https://onestepseoul.github.io/og-onestep-promo.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="간판교체 29만원 · 세무기장 1개월 무료 · 쇼츠 영상 제작 3개월 무료">
-<meta property="og:image:width" content="1254">
-<meta property="og:image:height" content="1254">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://onestepseoul.github.io/og-onestep-promo.jpg">
 <meta name="twitter:image:alt" content="간판교체 29만원 · 세무기장 1개월 무료 · 쇼츠 영상 제작 3개월 무료">
@@ -368,6 +368,80 @@
     .bcard,.bcard ul li{color:#222;border-color:#ccc;background:#fff}
     details{page-break-inside:avoid}
     details:not([open]) .terms-body,details:not([open]) .a{display:none}
+  }
+/* ---------- 제작 샘플 (3열 숏폼 그리드) ---------- */
+  .samplesec{
+    position:relative;overflow:hidden;color:#fff;border-radius:20px;
+    background:
+      radial-gradient(120% 70% at 90% 0%, rgba(var(--brand-rgb),.22) 0%, rgba(var(--brand-rgb),0) 62%),
+      linear-gradient(165deg,#1b212b 0%,#12161e 60%,#0e1218 100%);
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:var(--shadow-lg);
+    padding:22px 14px 22px;
+  }
+  .samplesec .sskick{font-size:12px;font-weight:800;color:var(--gold);letter-spacing:.08em}
+  .samplesec h2{margin-top:8px;font-size:20px;line-height:1.28;color:#fff;letter-spacing:-.03em}
+  .samplesec .sssub{margin-top:8px;font-size:13px;color:#b9c0cb;line-height:1.6}
+  .ssmedia{min-width:0}
+  .ssgrid{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;margin-top:16px}
+  .ssitem{min-width:0;margin:0;display:grid;gap:6px}
+  .ssbox{
+    position:relative;aspect-ratio:9 / 16;border-radius:10px;overflow:hidden;
+    background:#0b0e13 center/cover no-repeat;
+    border:1px solid rgba(255,255,255,.16);
+    box-shadow:0 10px 22px rgba(0,0,0,.45);
+    cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .ssbox:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .ssbox video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:transparent;
+    opacity:0;transition:opacity .12s linear}
+  .ssbox.started video{opacity:1}
+  .ssbox .ssplay{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(9,12,17,.52);border:1px solid rgba(255,255,255,.6);
+    color:#fff;font-size:11px;line-height:1;padding-left:2px;
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+    transition:opacity .15s ease;
+  }
+  .ssbox.playing .ssplay{opacity:0}
+  .ssbox .ssdur{
+    position:absolute;right:5px;bottom:5px;font-size:9.5px;font-weight:800;color:#fff;
+    background:rgba(9,12,17,.7);padding:2px 4px;border-radius:5px;
+    font-variant-numeric:tabular-nums;letter-spacing:.02em;
+  }
+  .ssbox.playing .ssdur{display:none}
+  .ssbox .sspause{
+    position:absolute;left:5px;bottom:5px;font-size:9px;font-weight:800;color:#fff;
+    background:rgba(9,12,17,.6);padding:2px 4px;border-radius:5px;display:none;
+  }
+  .ssbox.playing .sspause{display:block}
+  .sscap{margin:0;font-size:9.5px;line-height:1.35;color:#9aa4b2;letter-spacing:-.02em}
+  .sscap b{display:block;color:#eef2f7;font-weight:800;font-size:10px;margin-bottom:1px}
+  .sshint{margin:9px 0 0;font-size:10.5px;line-height:1.45;color:#8d96a4}
+  .ssside{min-width:0;margin-top:14px}
+  .ssside ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+  .ssside li{position:relative;padding-left:18px;font-size:13px;line-height:1.5;color:#c9d0da}
+  .ssside li b{color:#fff}
+  .ssside li::before{
+    content:"";position:absolute;left:3px;top:7px;width:6px;height:6px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px rgba(255,207,92,.16);
+  }
+  .ssside .btn{margin-top:14px}
+  .samplesec .ssnote{margin-top:10px;font-size:10.5px;line-height:1.5;color:#8d96a4}
+  @media (min-width:720px){
+    .samplesec{padding:28px 30px 30px;border-radius:24px}
+    .samplesec h2{font-size:24px}
+    .samplesec .sssub{font-size:14px;max-width:38em}
+    .ssmedia{max-width:600px;margin:0 auto}
+    .ssgrid{gap:12px;margin-top:20px}
+    .sshint{text-align:center}
+    .ssside{max-width:600px;margin:20px auto 0}
+    .ssside ul{gap:9px}
+    .ssside .btn{max-width:400px;margin-left:auto;margin-right:auto}
+    .samplesec .ssnote{max-width:600px;margin-left:auto;margin-right:auto;text-align:center}
+    .sscap{font-size:11.5px}
+    .sscap b{font-size:12px}
   }
 </style>
 </head>
@@ -969,7 +1043,42 @@
     if (typeof v === "string") return v.split("\n").filter(function (l) { return l.trim() !== ""; });
     return [];
   }
+
+/* 숏폼 샘플 섹션 (format:"media", videos: [{src,poster,cap1,cap2,duration,label}]) */
+  function mediaSectionHTML(item) {
+    var vs = item.videos || (item.video ? [item.video] : []);
+    var lines = sectionLines(item);
+    var h = '<div class="wrap"><div class="samplesec">';
+    if (item.kicker) h += '<p class="sskick">' + esc(item.kicker) + "</p>";
+    if (item.title) h += "<h2>" + esc(item.title) + "</h2>";
+    if (item.sub) h += '<p class="sssub">' + rich(item.sub) + "</p>";
+    h += '<div class="ssbody"><div class="ssmedia"><div class="ssgrid">';
+    for (var i = 0; i < vs.length; i++) {
+      var v = vs[i] || {};
+      h += '<figure class="ssitem"><div class="ssbox" role="button" tabindex="0" aria-pressed="false" data-label="' + esc(v.label || ("샘플 영상 " + (i + 1))) + '"';
+      if (v.poster) h += ' style="background-image:url(&quot;' + esc(v.poster) + '&quot;)"';
+      h += ">";
+      if (v.src) h += '<video src="' + esc(v.src) + '" poster="' + esc(v.poster || "") + '" playsinline preload="none" muted loop></video>';
+      h += '<span class="ssplay" aria-hidden="true">&#9654;</span>';
+      if (v.duration) h += '<span class="ssdur">' + esc(v.duration) + "</span>";
+      h += '<span class="sspause" aria-hidden="true">II</span>';
+      h += "</div>";
+      if (v.cap1 || v.cap2) {
+        h += '<figcaption class="sscap">' + (v.cap1 ? "<b>" + esc(v.cap1) + "</b>" : "") + (v.cap2 ? esc(v.cap2) : "") + "</figcaption>";
+      }
+      h += "</figure>";
+    }
+    h += "</div>";
+    if (item.hint) h += '<p class="sshint">' + rich(item.hint) + "</p>";
+    h += '</div><div class="ssside">';
+    if (lines.length) h += "<ul>" + lines.map(function (l) { return "<li>" + rich(l) + "</li>"; }).join("") + "</ul>";
+    if (item.ctaLabel) h += '<a class="btn btn-primary" href="' + esc(item.ctaHref || "#apply") + '">' + esc(item.ctaLabel) + "</a>";
+    if (item.note) h += '<p class="ssnote">' + rich(item.note) + "</p>";
+    h += "</div></div></div></div>";
+    return h;
+  }
   function customSectionHTML(item) {
+    if (item && item.format === "media") return mediaSectionHTML(item);
     var out = '<div class="wrap csec">';
     if (item.kicker) out += '<p class="kicker">' + rich(item.kicker) + "</p>";
     if (item.title) out += "<h2>" + esc(item.title) + "</h2>";
@@ -1514,6 +1623,51 @@
   }
 
   init();
+})();
+</script>
+<script>
+/* 3열 숏폼 샘플 영상 - 탭하면 소리와 함께 재생, 다시 탭하면 정지 (한 번에 한 편만) */
+(function () {
+  function boxes() { return [].slice.call(document.querySelectorAll(".ssbox")); }
+  function stopOthers(v) {
+    boxes().forEach(function (b) {
+      var o = b.querySelector("video");
+      if (o && o !== v) { o.pause(); b.classList.remove("playing"); b.setAttribute("aria-pressed", "false"); }
+    });
+  }
+  function toggle(box) {
+    var v = box.querySelector("video");
+    if (!v) return;
+    if (v.paused) {
+      stopOthers(v);
+      v.muted = false;
+      var pr = v.play();
+      if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play(); });
+      box.classList.add("playing");
+      box.setAttribute("aria-pressed", "true");
+    } else {
+      v.pause();
+      box.classList.remove("playing");
+      box.setAttribute("aria-pressed", "false");
+    }
+  }
+  document.addEventListener("click", function (e) {
+    var box = e.target && e.target.closest ? e.target.closest(".ssbox") : null;
+    if (box) { e.preventDefault(); toggle(box); }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var box = e.target && e.target.classList && e.target.classList.contains("ssbox") ? e.target : null;
+    if (box) { e.preventDefault(); toggle(box); }
+  });
+  document.addEventListener("pause", function (e) {
+    var b = e.target && e.target.closest ? e.target.closest(".ssbox") : null;
+    if (b) { b.classList.remove("playing"); b.setAttribute("aria-pressed", "false"); }
+  }, true);
+  document.addEventListener("play", function (e) {
+    var b = e.target && e.target.closest ? e.target.closest(".ssbox") : null;
+    if (b) { b.classList.add("playing", "started"); b.setAttribute("aria-pressed", "true"); }
+  }, true);
 })();
 </script>
 </body>
